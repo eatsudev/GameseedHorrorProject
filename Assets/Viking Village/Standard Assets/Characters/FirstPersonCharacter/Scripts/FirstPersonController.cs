@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using UnityEngine;
 using UnityStandardAssets.Utility;
@@ -27,6 +28,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
 
+        [SerializeField] private CinemachineVirtualCamera cinemachineCamera;
         private Camera m_Camera;
         private bool m_Jump;
         private float m_YRotation;
@@ -46,7 +48,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Start()
         {
             m_CharacterController = GetComponent<CharacterController>();
+
+
             m_Camera = Camera.main;
+
             m_OriginalCameraPosition = m_Camera.transform.localPosition;
             m_CameraRefocus = new CameraRefocus(m_Camera, transform, m_Camera.transform.localPosition);
             m_FovKick.Setup(m_Camera);
@@ -236,7 +241,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void RotateView()
         {
-            m_MouseLook.LookRotation (transform, m_Camera.transform);
+            if (cinemachineCamera)
+            {
+                m_MouseLook.LookRotation(transform, cinemachineCamera.transform);
+            }
+            else
+            {
+                m_MouseLook.LookRotation(transform, m_Camera.transform);
+            }
+            
             m_CameraRefocus.GetFocusPoint();
         }
 
