@@ -9,6 +9,7 @@ public class Player_Interaction : MonoBehaviour
 {
     public Transform interactorTransform;
     public float interactRange;
+    public LayerMask interactLayerMask;
 
     public TextMeshProUGUI interactText;
 
@@ -43,7 +44,7 @@ public class Player_Interaction : MonoBehaviour
     {
         Ray ray = new Ray(interactorTransform.position, interactorTransform.forward);
 
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, interactRange))
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, interactRange, interactLayerMask))
         {
             if (hitInfo.collider.gameObject.TryGetComponent(out interactableObject))
             {

@@ -22,17 +22,12 @@ public class CrouchController : MonoBehaviour
 
     private CharacterController m_CharacterController;
     private PlayerInput playerInput;
-    private FirstPersonController firstPersonController;
 
     public bool isCrouching = false;
     private Vector3 originalCameraLocalPosition;
-    private float originalWalkSpeed;
 
     void Start()
     {
-        firstPersonController = GetComponent<FirstPersonController>();
-        originalWalkSpeed = firstPersonController.WalkSpeed();
-
         playerInput = GetComponent<PlayerInput>();
         PlayerInputActions playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
