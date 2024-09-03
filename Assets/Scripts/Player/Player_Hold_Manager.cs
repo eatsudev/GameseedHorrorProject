@@ -14,7 +14,7 @@ public class Player_Hold_Manager : MonoBehaviour
     private Base_Holdable_Items itemHolded;
 
     private PlayerInput playerInput;
-
+    
     private void Awake()
     {
         if (instance == null)
@@ -84,4 +84,15 @@ public class Player_Hold_Manager : MonoBehaviour
 
         warningText.gameObject.SetActive(false);
     }
+
+    public void ItemUsed()
+    {
+        itemHolded.transform.parent = null;
+        Destroy(itemHolded.gameObject);
+        itemHolded = null;
+    }
+
+    #region Get Variables
+    public Base_Holdable_Items ItemHolded() { return  itemHolded; }
+    #endregion
 }

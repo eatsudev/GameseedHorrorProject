@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Seed : Base_Holdable_Items
+public class Base_Entity : MonoBehaviour
 {
-    public override void Interact()
+    void Start()
     {
-        base.Interact();
+        
+    }
+
+    void Update()
+    {
         
     }
 }

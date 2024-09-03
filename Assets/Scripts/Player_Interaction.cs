@@ -48,12 +48,15 @@ public class Player_Interaction : MonoBehaviour
         {
             if (hitInfo.collider.gameObject.TryGetComponent(out interactableObject))
             {
-                interactText.gameObject.SetActive(true);
-                if (interact)
+                if (interactableObject.IsInteractable())
                 {
-                    interactableObject.Interact();
+                    interactText.gameObject.SetActive(true);
+                    if (interact)
+                    {
+                        interactableObject.Interact();
+                    }
+                    return;
                 }
-                return;
             }
         }
         interactText.gameObject.SetActive(false);

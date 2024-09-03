@@ -6,26 +6,23 @@ public class Base_Holdable_Items : MonoBehaviour, IInteractable
 {
     public string textOnHover = "Press E To Pick Up";
     public new Rigidbody rigidbody;
+    private bool isInteractable = true;
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public bool IsInteractable()
     {
-        
+        return isInteractable;
     }
     public virtual void Interact()
     {
+        if (!isInteractable) return;
         Debug.Log("SeedInteracted" + gameObject);
 
         Player_Hold_Manager.instance.PickUpItem(this);
 
-    }
-    public virtual Base_Holdable_Items Get_Base_Holdable_Item()
-    {
-        return this;
     }
 
     public void ActivateGravity()
