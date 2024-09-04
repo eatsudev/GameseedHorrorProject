@@ -7,7 +7,7 @@ public class Base_Holdable_Items : MonoBehaviour, IInteractable
     public string textOnHover = "Press E To Pick Up";
     public new Rigidbody rigidbody;
     public Vector3 rotationOnHold = Vector3.zero;
-    private bool isInteractable = true;
+    public bool isInteractable = true;
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();

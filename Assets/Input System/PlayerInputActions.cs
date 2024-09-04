@@ -98,6 +98,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PlaceSeed"",
+                    ""type"": ""Button"",
+                    ""id"": ""ff7fc861-9e8f-490c-84a3-5a265f680487"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -368,11 +377,22 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0d5b73ee-8e21-4f25-9cdc-ff15c3411721"",
-                    ""path"": ""<Keyboard>/r"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""ReloadFlashlight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9cbc0b42-308f-4510-a635-23e2d5312742"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PlaceSeed"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -968,6 +988,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_DropItem = m_Player.FindAction("DropItem", throwIfNotFound: true);
         m_Player_ToggleFlashLight = m_Player.FindAction("ToggleFlashLight", throwIfNotFound: true);
         m_Player_ReloadFlashlight = m_Player.FindAction("ReloadFlashlight", throwIfNotFound: true);
+        m_Player_PlaceSeed = m_Player.FindAction("PlaceSeed", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1049,6 +1070,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_DropItem;
     private readonly InputAction m_Player_ToggleFlashLight;
     private readonly InputAction m_Player_ReloadFlashlight;
+    private readonly InputAction m_Player_PlaceSeed;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1061,6 +1083,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @DropItem => m_Wrapper.m_Player_DropItem;
         public InputAction @ToggleFlashLight => m_Wrapper.m_Player_ToggleFlashLight;
         public InputAction @ReloadFlashlight => m_Wrapper.m_Player_ReloadFlashlight;
+        public InputAction @PlaceSeed => m_Wrapper.m_Player_PlaceSeed;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1094,6 +1117,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ReloadFlashlight.started += instance.OnReloadFlashlight;
             @ReloadFlashlight.performed += instance.OnReloadFlashlight;
             @ReloadFlashlight.canceled += instance.OnReloadFlashlight;
+            @PlaceSeed.started += instance.OnPlaceSeed;
+            @PlaceSeed.performed += instance.OnPlaceSeed;
+            @PlaceSeed.canceled += instance.OnPlaceSeed;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1122,6 +1148,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ReloadFlashlight.started -= instance.OnReloadFlashlight;
             @ReloadFlashlight.performed -= instance.OnReloadFlashlight;
             @ReloadFlashlight.canceled -= instance.OnReloadFlashlight;
+            @PlaceSeed.started -= instance.OnPlaceSeed;
+            @PlaceSeed.performed -= instance.OnPlaceSeed;
+            @PlaceSeed.canceled -= instance.OnPlaceSeed;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1312,6 +1341,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnDropItem(InputAction.CallbackContext context);
         void OnToggleFlashLight(InputAction.CallbackContext context);
         void OnReloadFlashlight(InputAction.CallbackContext context);
+        void OnPlaceSeed(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

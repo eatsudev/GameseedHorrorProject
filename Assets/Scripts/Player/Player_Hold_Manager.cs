@@ -14,6 +14,7 @@ public class Player_Hold_Manager : MonoBehaviour
     private Base_Holdable_Items itemHolded;
 
     private PlayerInput playerInput;
+    private Base_Holdable_Items heldItem;
     
     private void Awake()
     {
@@ -58,6 +59,17 @@ public class Player_Hold_Manager : MonoBehaviour
         }
     }
 
+    public void PlaceItem(Transform placePoint)
+    {
+        if (heldItem != null)
+        {
+            heldItem.transform.SetParent(null);
+            heldItem.transform.position = placePoint.position;
+            heldItem.ActivateRigidBody();
+            heldItem = null;
+        }
+    }
+
     private void OnDropItem(InputAction.CallbackContext ctx)
     {
         if (itemHolded != null)
@@ -91,6 +103,16 @@ public class Player_Hold_Manager : MonoBehaviour
         itemHolded.transform.parent = null;
         Destroy(itemHolded.gameObject);
         itemHolded = null;
+    }
+
+    public bool IsHoldingItem()
+    {
+        return heldItem != null;
+    }
+
+    public Base_Holdable_Items GetHeldItem()
+    {
+        return heldItem;
     }
 
     #region Get Variables
