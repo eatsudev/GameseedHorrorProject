@@ -89,6 +89,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ReloadFlashlight"",
+                    ""type"": ""Button"",
+                    ""id"": ""d25f2fb5-dcb1-4598-baa7-9c6766c30817"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -353,6 +362,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""ToggleFlashLight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0d5b73ee-8e21-4f25-9cdc-ff15c3411721"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ReloadFlashlight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -947,6 +967,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_DropItem = m_Player.FindAction("DropItem", throwIfNotFound: true);
         m_Player_ToggleFlashLight = m_Player.FindAction("ToggleFlashLight", throwIfNotFound: true);
+        m_Player_ReloadFlashlight = m_Player.FindAction("ReloadFlashlight", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1027,6 +1048,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_DropItem;
     private readonly InputAction m_Player_ToggleFlashLight;
+    private readonly InputAction m_Player_ReloadFlashlight;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1038,6 +1060,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @DropItem => m_Wrapper.m_Player_DropItem;
         public InputAction @ToggleFlashLight => m_Wrapper.m_Player_ToggleFlashLight;
+        public InputAction @ReloadFlashlight => m_Wrapper.m_Player_ReloadFlashlight;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1068,6 +1091,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleFlashLight.started += instance.OnToggleFlashLight;
             @ToggleFlashLight.performed += instance.OnToggleFlashLight;
             @ToggleFlashLight.canceled += instance.OnToggleFlashLight;
+            @ReloadFlashlight.started += instance.OnReloadFlashlight;
+            @ReloadFlashlight.performed += instance.OnReloadFlashlight;
+            @ReloadFlashlight.canceled += instance.OnReloadFlashlight;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1093,6 +1119,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleFlashLight.started -= instance.OnToggleFlashLight;
             @ToggleFlashLight.performed -= instance.OnToggleFlashLight;
             @ToggleFlashLight.canceled -= instance.OnToggleFlashLight;
+            @ReloadFlashlight.started -= instance.OnReloadFlashlight;
+            @ReloadFlashlight.performed -= instance.OnReloadFlashlight;
+            @ReloadFlashlight.canceled -= instance.OnReloadFlashlight;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1282,6 +1311,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnDropItem(InputAction.CallbackContext context);
         void OnToggleFlashLight(InputAction.CallbackContext context);
+        void OnReloadFlashlight(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
