@@ -4,10 +4,22 @@ using UnityEngine;
 
 public class Progress_Manager : MonoBehaviour
 {
+    public static Progress_Manager instance;
+
     private int flowerBurned;
     public Ritual_Circle ritual_Circle;
 
-
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         ritual_Circle = Entities_Manager.Instance.ritual_Circle;

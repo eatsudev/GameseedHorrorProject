@@ -20,7 +20,7 @@ public class Ritual_Circle : Base_Interactable_Structure
     }
     void Start()
     {
-
+        fireParticleSystem.Stop();
     }
 
     void Update()
@@ -32,15 +32,24 @@ public class Ritual_Circle : Base_Interactable_Structure
         base.Interact();
 
         Base_Holdable_Items playerHoldedItem = Player_Hold_Manager.instance.ItemHolded();
+
+        if (!playerHoldedItem)
+        {
+            StartCoroutine(Player_Hold_Manager.instance.WarningOnItem("Need Flower to Burn"));
+            return;
+        }
+
         Flower flower = playerHoldedItem.GetComponent<Flower>();
 
         if (flower)
         {
-            
+            StartCoroutine(BurnFlower());
+            Debug.Log("Burn");
         }
         else
         {
-            
+            StartCoroutine(Player_Hold_Manager.instance.WarningOnItem("Need Flower to Burn"));
+            return;
         }
     }
 
@@ -49,13 +58,17 @@ public class Ritual_Circle : Base_Interactable_Structure
         Debug.Log("Burning Flower");
         isInteractable = false;
 
+        Player_Hold_Manager.instance.ItemUsed();
+
         flowerIsBurning.Invoke();
 
-        yield return new WaitForSeconds(4);
+        fireParticleSystem.Play();
+
+        yield return new WaitForSeconds(1);
 
         Debug.Log("Flower Burned");
         isInteractable = true;
 
-
+        fireParticleSystem.Stop();
     }
 }
