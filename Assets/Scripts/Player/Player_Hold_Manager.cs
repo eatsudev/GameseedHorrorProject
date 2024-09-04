@@ -47,14 +47,14 @@ public class Player_Hold_Manager : MonoBehaviour
     {
         if (itemHolded != null)
         {
-            StartCoroutine(UnableToPickUpItemWarning());
+            StartCoroutine(WarningOnItem("Is Already Holding Item!"));
         }
         else
         {
             itemHolded = itemToHold;
             itemHolded.transform.position = holdPoint.position;
             itemHolded.transform.parent = holdPoint;
-            itemHolded.DeactivateGravity();
+            itemHolded.DeactivateRigidBody();
         }
     }
 
@@ -72,12 +72,13 @@ public class Player_Hold_Manager : MonoBehaviour
     private void DropItem()
     {
         itemHolded.transform.parent = null;
-        itemHolded.ActivateGravity();
+        itemHolded.ActivateRigidBody();
         itemHolded = null;
     }
 
-    private IEnumerator UnableToPickUpItemWarning()
+    public IEnumerator WarningOnItem(string warningMessage)
     {
+        warningText.text = warningMessage;
         warningText.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(2f);

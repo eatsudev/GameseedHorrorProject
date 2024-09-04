@@ -6,6 +6,7 @@ public class Base_Holdable_Items : MonoBehaviour, IInteractable
 {
     public string textOnHover = "Press E To Pick Up";
     public new Rigidbody rigidbody;
+    public Vector3 rotationOnHold = Vector3.zero;
     private bool isInteractable = true;
     void Start()
     {
@@ -25,15 +26,16 @@ public class Base_Holdable_Items : MonoBehaviour, IInteractable
 
     }
 
-    public void ActivateGravity()
+    public void ActivateRigidBody()
     {
         rigidbody.useGravity = true;
         rigidbody.constraints = RigidbodyConstraints.None;
     }
 
-    public void DeactivateGravity()
+    public void DeactivateRigidBody()
     {
         rigidbody.useGravity = false;
         rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        transform.localEulerAngles = rotationOnHold;
     }
 }

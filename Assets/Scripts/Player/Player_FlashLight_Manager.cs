@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player_FlashLight_Manager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Player_FlashLight_Manager : MonoBehaviour
     public AudioClip toggleFLClip;
     public List<Image> Charge;
     public HorizontalLayoutGroup chargeHorizontalLayoutGroup;
+    public TextMeshProUGUI warningText;
 
 
     [SerializeField] private float maxFLCharge;
@@ -30,6 +32,7 @@ public class Player_FlashLight_Manager : MonoBehaviour
         playerInputActions.Player.Enable();
 
         playerInputActions.Player.ToggleFlashLight.performed += ToggleFL;
+        playerInputActions.Player.ReloadFlashlight.performed += OnReload;
 
         flashLight.enabled = false;
     }
@@ -52,33 +55,46 @@ public class Player_FlashLight_Manager : MonoBehaviour
             {
                 TurnOffFL();
             }
+            BatteryLowWarning();
             UpdateChargeDisplay();
         }
     }
 
-    private void UpdateChargeDisplay()
+    private void OnReload(InputAction.CallbackContext ctx)
     {
-        int count = Charge.Count;
-
-        float chargePerSections = (maxFLCharge / count);
-
-        int amountOfSections = Mathf.RoundToInt(((maxFLCharge - currFLCharge) / chargePerSections) - 0.5f);
-
-        if (amountOfSections > count)
+        if (ctx.performed)
         {
-            Debug.Log("ERROR, more sections to deactivate than there are sections");
-            return;
-        }
+            Battery battery = Player_Hold_Manager.instance.ItemHolded().GetComponent<Battery>();
+            if (battery != null)
+            {
+                if(currFLCharge >= 95)
+                {
+                    StartCoroutine(Player_Hold_Manager.instance.WarningOnItem("Battery is still Full"));
+                    return;
+                }
+                Player_Hold_Manager.instance.ItemUsed();
+                StartCoroutine(BatteryReloaded());
 
-
-
-        for (int i = 0; i < amountOfSections; i++)
-        {
-            Debug.Log(i);
-            Charge[i].gameObject.SetActive(false);
+                
+            }
+            else
+            {
+                warningText.enabled = false;
+                StartCoroutine(Player_Hold_Manager.instance.WarningOnItem("Need Battery"));
+            }
         }
     }
 
+    private IEnumerator BatteryReloaded()
+    {
+
+
+        yield return new WaitForSeconds(0.3f);
+
+        currFLCharge = maxFLCharge;
+        Debug.Log(currFLCharge);
+        UpdateChargeDisplay();
+    }
     private void ToggleFL(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
@@ -109,6 +125,47 @@ public class Player_FlashLight_Manager : MonoBehaviour
     public void SetFLIntensity(float newIntensity)
     {
         flashLight.intensity = newIntensity;
+    }
+    #endregion
+
+    #region Visual Indicator
+    private void UpdateChargeDisplay()
+    {
+        int count = Charge.Count;
+
+        float chargePerSections = (maxFLCharge / count);
+
+        int amountOfSections = Mathf.RoundToInt(((maxFLCharge - currFLCharge) / chargePerSections) - 0.5f);
+
+        if (amountOfSections > count)
+        {
+            Debug.Log("ERROR, more sections to deactivate than there are sections");
+            return;
+        }
+
+        foreach (Image image in Charge)
+        {
+            image.gameObject.SetActive(true);
+        }
+        Debug.Log(amountOfSections);
+
+        for (int i = 0; i < amountOfSections; i++)
+        {
+            Debug.Log(i);
+            Charge[i].gameObject.SetActive(false);
+        }
+    }
+
+    private void BatteryLowWarning()
+    {
+        if (currFLCharge <= 25)
+        {
+            warningText.gameObject.SetActive(true);
+        }
+        else
+        {
+            warningText.gameObject.SetActive(false);
+        }
     }
     #endregion
 
