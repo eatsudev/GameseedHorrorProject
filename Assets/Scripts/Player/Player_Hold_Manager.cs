@@ -11,10 +11,9 @@ public class Player_Hold_Manager : MonoBehaviour
     public TextMeshProUGUI warningText;
     public Transform holdPoint;
 
-    private Base_Holdable_Items itemHolded;
+    private Base_Holdable_Items itemHeld;
 
     private PlayerInput playerInput;
-    private Base_Holdable_Items heldItem;
     
     private void Awake()
     {
@@ -46,33 +45,22 @@ public class Player_Hold_Manager : MonoBehaviour
 
     public void PickUpItem(Base_Holdable_Items itemToHold)
     {
-        if (itemHolded != null)
+        if (itemHeld != null)
         {
-            StartCoroutine(WarningOnItem("Is Already Holding Item!"));
+            WarningOnItem("Is Already Holding Item!");
         }
         else
         {
-            itemHolded = itemToHold;
-            itemHolded.transform.position = holdPoint.position;
-            itemHolded.transform.parent = holdPoint;
-            itemHolded.DeactivateRigidBody();
-        }
-    }
-
-    public void PlaceItem(Transform placePoint)
-    {
-        if (heldItem != null)
-        {
-            heldItem.transform.SetParent(null);
-            heldItem.transform.position = placePoint.position;
-            heldItem.ActivateRigidBody();
-            heldItem = null;
+            itemHeld = itemToHold;
+            itemHeld.transform.position = holdPoint.position;
+            itemHeld.transform.parent = holdPoint;
+            itemHeld.DeactivateRigidBody();
         }
     }
 
     private void OnDropItem(InputAction.CallbackContext ctx)
     {
-        if (itemHolded != null)
+        if (itemHeld != null)
         {
             if (ctx.performed)
             {
@@ -83,12 +71,19 @@ public class Player_Hold_Manager : MonoBehaviour
 
     private void DropItem()
     {
-        itemHolded.transform.parent = null;
-        itemHolded.ActivateRigidBody();
-        itemHolded = null;
+        itemHeld.transform.parent = null;
+        itemHeld.ActivateRigidBody();
+        itemHeld = null;
     }
 
-    public IEnumerator WarningOnItem(string warningMessage)
+    public void WarningOnItem(string warningMessage)
+    {
+
+        StartCoroutine(WarningOnItemProcess(warningMessage));
+
+    }
+
+    public IEnumerator WarningOnItemProcess(string warningMessage)
     {
         warningText.text = warningMessage;
         warningText.gameObject.SetActive(true);
@@ -100,22 +95,21 @@ public class Player_Hold_Manager : MonoBehaviour
 
     public void ItemUsed()
     {
-        itemHolded.transform.parent = null;
-        Destroy(itemHolded.gameObject);
-        itemHolded = null;
+        itemHeld.transform.parent = null;
+        Destroy(itemHeld.gameObject);
+        itemHeld = null;
     }
+
+    
+
+    #region Get Variables
+
+    public Base_Holdable_Items GetHeldItem() { return  itemHeld; }
 
     public bool IsHoldingItem()
     {
-        return heldItem != null;
+        return itemHeld != null;
     }
 
-    public Base_Holdable_Items GetHeldItem()
-    {
-        return heldItem;
-    }
-
-    #region Get Variables
-    public Base_Holdable_Items ItemHolded() { return  itemHolded; }
     #endregion
 }

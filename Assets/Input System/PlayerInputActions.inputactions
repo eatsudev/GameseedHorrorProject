@@ -76,15 +76,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "PlaceSeed",
-                    "type": "Button",
-                    "id": "ff7fc861-9e8f-490c-84a3-5a265f680487",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -355,22 +346,11 @@
                 {
                     "name": "",
                     "id": "0d5b73ee-8e21-4f25-9cdc-ff15c3411721",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "ReloadFlashlight",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9cbc0b42-308f-4510-a635-23e2d5312742",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "PlaceSeed",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -64,12 +64,12 @@ public class Player_FlashLight_Manager : MonoBehaviour
     {
         if (ctx.performed)
         {
-            Battery battery = Player_Hold_Manager.instance.ItemHolded().GetComponent<Battery>();
+            Battery battery = Player_Hold_Manager.instance.GetHeldItem().GetComponent<Battery>();
             if (battery != null)
             {
                 if(currFLCharge >= 95)
                 {
-                    StartCoroutine(Player_Hold_Manager.instance.WarningOnItem("Battery is still Full"));
+                    Player_Hold_Manager.instance.WarningOnItem("Battery is still Full");
                     return;
                 }
                 Player_Hold_Manager.instance.ItemUsed();
@@ -80,7 +80,7 @@ public class Player_FlashLight_Manager : MonoBehaviour
             else
             {
                 warningText.enabled = false;
-                StartCoroutine(Player_Hold_Manager.instance.WarningOnItem("Need Battery"));
+                Player_Hold_Manager.instance.WarningOnItem("Need Battery");
             }
         }
     }

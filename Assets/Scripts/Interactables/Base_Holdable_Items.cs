@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Base_Holdable_Items : MonoBehaviour, IInteractable
 {
-    public string textOnHover = "Press E To Pick Up";
-    public new Rigidbody rigidbody;
+    public string textOnHover = "E To Pick Up";
+    public Rigidbody rigidbody;
     public Vector3 rotationOnHold = Vector3.zero;
     public bool isInteractable = true;
     void Start()

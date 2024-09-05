@@ -31,11 +31,11 @@ public class Ritual_Circle : Base_Interactable_Structure
     {
         base.Interact();
 
-        Base_Holdable_Items playerHoldedItem = Player_Hold_Manager.instance.ItemHolded();
+        Base_Holdable_Items playerHoldedItem = Player_Hold_Manager.instance.GetHeldItem();
 
         if (!playerHoldedItem)
         {
-            StartCoroutine(Player_Hold_Manager.instance.WarningOnItem("Need Flower to Burn"));
+            Player_Hold_Manager.instance.WarningOnItem("Need Flower to Burn");
             return;
         }
 
@@ -48,7 +48,7 @@ public class Ritual_Circle : Base_Interactable_Structure
         }
         else
         {
-            StartCoroutine(Player_Hold_Manager.instance.WarningOnItem("Need Flower to Burn"));
+            Player_Hold_Manager.instance.WarningOnItem("Need Flower to Burn");
             return;
         }
     }

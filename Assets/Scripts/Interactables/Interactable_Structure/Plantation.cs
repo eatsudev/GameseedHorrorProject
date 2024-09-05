@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +7,27 @@ using UnityEngine.InputSystem;
 public class Plantation : Base_Interactable_Structure
 {
     public static Plantation instance;
-    public Transform[] plantPoints;  
-    public GameObject flowerPrefab; 
-    public float growTime = 5f;
-    private PlayerInput playerInput;
-    private Base_Holdable_Items itemPlaced;
+    public Transform plantPoint;
+    public GameObject currPlantGO;
+    
+    public Flower flowerPrefab; 
+
+    [Serializable]
+    public class PlantStage
+    {
+        public GameObject plantStageModelPrefabs;
+        public float growTime;
+    }
+
+    public List<PlantStage> plantStages;
+
+    private int currStage;
+
+    private Flower flowerToHarvest;
+
+    private bool isWatered;
+    private bool seedIsPlanted = false;
+    private bool isReadyToHarvest = false;
 
     private void Awake()
     {
@@ -25,59 +42,173 @@ public class Plantation : Base_Interactable_Structure
     }
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
-        PlayerInputActions playerInputActions = new PlayerInputActions();
-        playerInputActions.Player.Enable();
 
-        playerInputActions.Player.PlaceSeed.performed += OnPlaceSeed;
     }
 
-    private void OnPlaceSeed(InputAction.CallbackContext ctx)
-    {
-        if (itemPlaced != null)
-        {
-            if (ctx.performed)
-            {
-                Interact();
-            }
-        }
-    }
     public override void Interact()
     {
         base.Interact();
 
+
         if (Player_Hold_Manager.instance.IsHoldingItem())
         {
             Base_Holdable_Items heldItem = Player_Hold_Manager.instance.GetHeldItem();
-            if (heldItem is Seed)
+            Seed seed = heldItem.GetComponent<Seed>();
+            Water_Bucket bucket = heldItem.GetComponent<Water_Bucket>();
+            if (seed)
             {
-                foreach (Transform plantPoint in plantPoints)
+                if (!seedIsPlanted)
                 {
-                    if (CheckIfEmpty(plantPoint))
-                    {
-                        Player_Hold_Manager.instance.PlaceItem(plantPoint);
-                        StartCoroutine(GrowSeed(plantPoint));
-                        break;
-                    }
+                    StartGrowngSeed();
+
+                    Player_Hold_Manager.instance.WarningOnItem("Seed Planted");
+                    return;
                 }
+                else if(seedIsPlanted && !isWatered && !isReadyToHarvest)
+                {
+                    Player_Hold_Manager.instance.WarningOnItem("Planted Seed need Water to Grow");
+                    return;
+                }
+                else if(seedIsPlanted && isWatered && !isReadyToHarvest)
+                {
+                    Player_Hold_Manager.instance.WarningOnItem("Seed is already Growing");
+                    return;
+                }
+                else if(seedIsPlanted && isReadyToHarvest)
+                {
+                    Player_Hold_Manager.instance.WarningOnItem("Flower is Ready to Harvest");
+                    return;
+                }
+            }
+            else if (bucket)
+            {
+                if(!seedIsPlanted)
+                {
+                    Player_Hold_Manager.instance.WarningOnItem("Need Seed to Water");
+                    return;
+                }
+                else if (seedIsPlanted && !isWatered && !isReadyToHarvest)
+                {
+                    if (bucket.IsFilledWithWater())
+                    {
+                        WateringSeed();
+                        bucket.EmptyWater();
+
+                        Player_Hold_Manager.instance.WarningOnItem("Planted Seed is Watered");
+                    }
+                    else
+                    {
+                        Player_Hold_Manager.instance.WarningOnItem("Bucket is Empty");
+                    }
+                    
+                    return;
+                }
+                else if (seedIsPlanted && isWatered && !isReadyToHarvest)
+                {
+                    Player_Hold_Manager.instance.WarningOnItem("Seed is already Growing");
+                    return;
+                }
+                else if (seedIsPlanted && isReadyToHarvest)
+                {
+                    Player_Hold_Manager.instance.WarningOnItem("Flower is Ready to Harvest");
+                    return;
+                }
+            }
+            else
+            {
+                if (!seedIsPlanted)
+                {
+                    Player_Hold_Manager.instance.WarningOnItem("Need Seed to Grow");
+                    return;
+                }
+                else if (seedIsPlanted && !isWatered && !isReadyToHarvest)
+                {
+                    Player_Hold_Manager.instance.WarningOnItem("Planted Seed need Water to Grow");
+                    return;
+                }
+                else if (seedIsPlanted && isWatered && !isReadyToHarvest)
+                {
+                    Player_Hold_Manager.instance.WarningOnItem("Seed is not yet Grown");
+                    return;
+                }
+                else if (seedIsPlanted && isReadyToHarvest)
+                {
+                    Player_Hold_Manager.instance.WarningOnItem("Flower is Ready to Harvest");
+                    return;
+                }
+            }
+        }
+        else
+        {
+            if (!seedIsPlanted)
+            {
+                Player_Hold_Manager.instance.WarningOnItem("Need Seed to Grow");
+                return;
+            }
+            else if (seedIsPlanted && !isWatered && !isReadyToHarvest)
+            {
+                Player_Hold_Manager.instance.WarningOnItem("Planted Seed need Water to Grow");
+                return;
+            }
+            else if (seedIsPlanted && !isReadyToHarvest)
+            {
+                Player_Hold_Manager.instance.WarningOnItem("Seed is not yet Grown");
+                return;
+            }
+            if (seedIsPlanted && isReadyToHarvest)
+            {
+                Harvest();
+                Player_Hold_Manager.instance.WarningOnItem("Flower is Harvested");
+                return;
             }
         }
     }
 
-    private IEnumerator GrowSeed(Transform plantPoint)
+    private void StartGrowngSeed()
     {
-        yield return new WaitForSeconds(growTime);
-
-        foreach (Transform child in plantPoint)
-        {
-            Destroy(child.gameObject);
-        }
-        GameObject flower = Instantiate(flowerPrefab, plantPoint.position, Quaternion.identity);
-        flower.GetComponent<Base_Interactable_Structure>().isInteractable = true;
+        currStage = 0;
+        seedIsPlanted = true;
+        isReadyToHarvest = false;
+        Player_Hold_Manager.instance.ItemUsed();
+        StartCoroutine(GrowSeed());
     }
 
-    private bool CheckIfEmpty(Transform plantPoint)
+    private void WateringSeed()
     {
-        return plantPoint.childCount == 0; 
+        isWatered = true;
+    }
+
+    private IEnumerator GrowSeed()
+    {
+        foreach(PlantStage plantStage in plantStages)
+        {
+            currStage++;
+            Destroy(currPlantGO);
+            
+            currPlantGO = Instantiate(plantStage.plantStageModelPrefabs, plantPoint.position, Quaternion.identity, plantPoint);
+            currPlantGO.transform.position = plantPoint.position;
+
+            while (!isWatered && currStage == 1)
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(plantStage.growTime);
+        }
+
+        isReadyToHarvest = true;
+    }
+
+    private void Harvest()
+    {
+        Destroy(currPlantGO);
+
+        flowerToHarvest = Instantiate(flowerPrefab, plantPoint.position, Quaternion.identity, plantPoint);
+        Player_Hold_Manager.instance.PickUpItem(flowerToHarvest);
+
+        currStage = 0;
+        seedIsPlanted = false;
+        isWatered = false;
+        isReadyToHarvest = false;
     }
 }
