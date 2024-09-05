@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5539429197075549427}
   - component: {fileID: 7481663927503565762}
   m_Layer: 6
-  m_Name: EmptyBucket_Model
+  m_Name: FullBucket_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 5183980874001474341}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.104, y: -0.2554, z: -0.818}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9c8a3d0c459338645aa7a812c9a676cf, type: 2}
+  - {fileID: 2100000, guid: 0bd1616d23ad2a54ba212342ab3afea6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
