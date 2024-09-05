@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class Ritual_Circle : Base_Interactable_Structure
 {
     public ParticleSystem fireParticleSystem;
+    public Transform flowerPoint;
 
     private bool isBurningFlower;
 
@@ -43,7 +44,8 @@ public class Ritual_Circle : Base_Interactable_Structure
 
         if (flower)
         {
-            StartCoroutine(BurnFlower());
+            Player_Hold_Manager.instance.DropItem();
+            StartCoroutine(BurnFlower(flower));
             Debug.Log("Burn");
         }
         else
@@ -53,12 +55,14 @@ public class Ritual_Circle : Base_Interactable_Structure
         }
     }
 
-    private IEnumerator BurnFlower()
+    private IEnumerator BurnFlower(Flower flower)
     {
         Debug.Log("Burning Flower");
         isInteractable = false;
 
-        Player_Hold_Manager.instance.ItemUsed();
+        flower.transform.position = flowerPoint.transform.position;
+        flower.transform.parent = flowerPoint;
+        flower.DeactivateRigidBody();
 
         flowerIsBurning.Invoke();
 
@@ -68,6 +72,8 @@ public class Ritual_Circle : Base_Interactable_Structure
 
         Debug.Log("Flower Burned");
         isInteractable = true;
+
+        Destroy(flower.gameObject);
 
         fireParticleSystem.Stop();
     }

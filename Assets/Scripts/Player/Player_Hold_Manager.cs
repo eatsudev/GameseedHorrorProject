@@ -69,7 +69,7 @@ public class Player_Hold_Manager : MonoBehaviour
         }
     }
 
-    private void DropItem()
+    public void DropItem()
     {
         itemHeld.transform.parent = null;
         itemHeld.ActivateRigidBody();
