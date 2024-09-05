@@ -8,24 +8,19 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Meadow_Grass_01
-  m_Shader: {fileID: -6465566751694194690, guid: cdac903258e3f324b994c0331d222b5f,
-    type: 3}
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _DISABLE_DBUFFER
-  - _DOUBLESIDED_ON
-  - _MASKMAP
-  - _MATERIAL_FEATURE_TRANSMISSION
+  m_ValidKeywords:
+  - _ALPHATEST_ON
   - _NORMALMAP
-  - _NORMALMAP_TANGENT_SPACE
-  - _THICKNESSMAP
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 1
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2450
+  stringTagMap:
+    RenderType: TransparentCutout
   disabledShaderPasses:
   - DistortionVectors
   - TransparentBackfaceDebugDisplay
@@ -51,6 +46,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _BaseColorMapT2DA:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 9bf68c6e5059e7549b60e91ca11987a6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BentNormalMap:
@@ -98,7 +97,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailMask:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: e9a1c1b060b9b2c4989233f1037f9d5d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailMaskT2DA:
@@ -331,21 +330,28 @@ Material:
     - _AORemapMin: 0.6934435
     - _ATDistance: 1
     - _AlbedoAffectEmissive: 0
+    - _AlphaClip: 1
     - _AlphaCutoff: 0.5
     - _AlphaCutoffEnable: 1
     - _AlphaCutoffPostpass: 0.5
     - _AlphaCutoffPrepass: 0.5
+    - _AlphaToMask: 1
     - _Anisotropy: 0
     - _Asperity: 2
     - _BackfaceSmoothnessScale: 1
     - _BaseMapEncoding: 0
     - _BillboardMode: 0
     - _BillboardShadowMode: 0
+    - _Blend: 0
     - _BlendMode: 0
+    - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
+    - _ClearCoatMask: 0
+    - _ClearCoatSmoothness: 0
     - _CoatCoverage: 1
     - _CoatIOR: 0.5
     - _CoatMask: 0
+    - _Cull: 2
     - _CullMode: 0
     - _CullModeForward: 0
     - _CullModeNormalFlip: 1
@@ -353,6 +359,7 @@ Material:
     - _DebugTreeOcclusion: 0
     - _DepthOffset: 0
     - _DepthOffsetEnable: 0
+    - _DetailAlbedoMapScale: 1
     - _DetailAlbedoScale: 1
     - _DetailMode: 0
     - _DetailNormalMapScale: 1
@@ -382,6 +389,7 @@ Material:
     - _DoubleSidedNormalMode: 1
     - _Drag: 1
     - _DstBlend: 0
+    - _DstBlendAlpha: 0
     - _EmissiveColorMode: 1
     - _EnableAmbient: 1
     - _EnableBlendModePreserveSpecularLighting: 1
@@ -393,6 +401,7 @@ Material:
     - _EnableSpecularOcclusion: 0
     - _EnableWind: 0
     - _EnergyConservingSpecularColor: 1
+    - _EnvironmentReflections: 1
     - _FullDetailNormalBlendThreshold: 1
     - _FullDetailNormalBlendWidth: 0.05
     - _GlossMapScale: 1
@@ -434,6 +443,7 @@ Material:
     - _PreRefractionPass: 0
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ReceiveShadows: 1
     - _RefractionMode: 0
     - _RefractionModel: 0
     - _RefractionSSRayModel: 0
@@ -441,7 +451,7 @@ Material:
     - _SSSAndTransmissionType: 2
     - _ShiverDirectionality: 0.5
     - _ShiverDrag: 0.2
-    - _Smoothness: 1
+    - _Smoothness: 0.558
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0.2678665
     - _SmoothnessTextureChannel: 0
@@ -450,6 +460,7 @@ Material:
     - _SpecularAAThreshold: 0.2
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _SrcBlendAlpha: 1
     - _StencilRef: 2
     - _StencilRefMV: 128
     - _StencilWriteMask: 7
@@ -459,6 +470,7 @@ Material:
     - _SubsurfaceProfile: 0
     - _SubsurfaceRadius: 1
     - _SupportDBuffer: 0
+    - _Surface: 0
     - _SurfaceType: 0
     - _TexWorldScale: 1
     - _TexWorldScaleEmissive: 1
@@ -507,6 +519,7 @@ Material:
     - _WindRangeLvl1: 0.5
     - _WindRangeLvlB: 5
     - _WindRangeRadius: 2.3
+    - _WorkflowMode: 1
     - _ZTestDepthEqualForOpaque: 3
     - _ZTestGBuffer: 3
     - _ZTestMode: 8
@@ -515,11 +528,11 @@ Material:
     m_Colors:
     - Color_f6809ef39ba74a7b9b7791f0b180b7b2: {r: 1, g: 0.7700708, b: 0, a: 1}
     - _BackfaceBaseColorScale: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 0.7960573, g: 0.80477035, b: 0.8396226, a: 1}
+    - _BaseColor: {r: 1, g: 0.6897469, b: 0, a: 1}
     - _BaseColorRandomize: {r: 0, g: 0, b: 0, a: 0.05}
-    - _Color: {r: 0.7960573, g: 0.80477035, b: 0.8396226, a: 1}
+    - _Color: {r: 1, g: 0.6897469, b: 0, a: 1}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
-    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 1, g: 0.16080059, b: 0, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - _ImposterOffset: {r: 0.5, g: 0, b: 0, a: 0}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
