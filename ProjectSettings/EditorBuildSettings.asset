@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Opening.unity
     guid: 0b66fe5693d55df469d9c4f2a28d7853
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/derriel.unity
+    guid: 5bb556943007ec643a3d9acb0b81c811
   m_configObjects: {}
