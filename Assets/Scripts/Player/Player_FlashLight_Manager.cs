@@ -25,6 +25,7 @@ public class Player_FlashLight_Manager : MonoBehaviour
     void Start()
     {
         currFLCharge = maxFLCharge;
+        
         chargeHorizontalLayoutGroup.enabled = false;
         UpdateChargeDisplay();
 

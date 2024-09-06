@@ -6,7 +6,7 @@ using UnityEngine.Video;
 
 public class JumpscareUI : MonoBehaviour
 {
-    public RawImage jumpScareScreen;
+    public GameObject jumpscare;
     public VideoPlayer jumpScareVideoPlayer;
     public AudioClip jumpScareAudioClip;
 
@@ -14,7 +14,7 @@ public class JumpscareUI : MonoBehaviour
 
     private void Start()
     {
-        jumpScareScreen.gameObject.SetActive(false);
+        jumpscare.SetActive(false);
     }
 
     public void TriggerJumpScare()
@@ -24,7 +24,7 @@ public class JumpscareUI : MonoBehaviour
 
     private IEnumerator JumpScareProcess()
     {
-        jumpScareScreen.gameObject.SetActive(true);
+        jumpscare.SetActive(true);
         jumpScareVideoPlayer.Play();
 
         if (jumpScareAudioClip != null && audioSource != null)
@@ -34,7 +34,7 @@ public class JumpscareUI : MonoBehaviour
 
         yield return new WaitForSeconds((float)jumpScareVideoPlayer.clip.length);
 
-        jumpScareScreen.gameObject.SetActive(false);
+        jumpscare.SetActive(false);
 
         InGame_UI_Manager.Instance.deathScreenUI.ShowDeathScreen();
     }

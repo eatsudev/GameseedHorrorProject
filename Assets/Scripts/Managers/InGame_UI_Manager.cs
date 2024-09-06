@@ -8,6 +8,8 @@ public class InGame_UI_Manager : MonoBehaviour
 
     public JumpscareUI jumpscareUI;
     public DeathScreenUI deathScreenUI;
+    public VictoryScreenUI victoryScreenUI;
+         
 
     private void Awake()
     {
@@ -25,5 +27,6 @@ public class InGame_UI_Manager : MonoBehaviour
     {
         jumpscareUI = GetComponentInChildren<JumpscareUI>();
         deathScreenUI = GetComponentInChildren<DeathScreenUI>();
+        victoryScreenUI = GetComponentInChildren<VictoryScreenUI>();
     }
 }
