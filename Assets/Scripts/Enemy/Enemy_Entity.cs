@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 using UnityEditor.TerrainTools;
 using UnityEditor;
 using UnityEngine.Rendering.PostProcessing;
+using Unity.PlasticSCM.Editor.WebApi;
 
 public class Enemy_Entity : Base_Entity
 {
@@ -23,6 +24,8 @@ public class Enemy_Entity : Base_Entity
 
     public LayerMask playerLayer;
     public LayerMask obstructionLayer;
+    public Transform[] patrolPoints;
+    public float waitTimeAtPatrolPoint = 2f;
     
 
     //public Animator ghostAnimator; 
@@ -33,8 +36,9 @@ public class Enemy_Entity : Base_Entity
     private Player_Entity player;
     private AudioSource audioSource;
     private NavMeshAgent navMeshAgent;
-
     private bool hasJumpScared = false;
+    private int currentPatrolIndex = 0;
+    private bool isWaiting = false;
 
     void Start()
     {
@@ -63,9 +67,13 @@ public class Enemy_Entity : Base_Entity
                     TriggerJumpScare();
                 }
             }
+            else if (!isWaiting && !navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+            {
+                StartCoroutine(WaitAndPatrolNextPoint());
+            }
         }
 
-        navMeshAgent.speed = chaseSpeed * speedModifier;
+        navMeshAgent.speed = player ? chaseSpeed * speedModifier : moveSpeed;
     }
 
     void DetectPlayer()
@@ -157,6 +165,23 @@ public class Enemy_Entity : Base_Entity
         InGame_UI_Manager.Instance.jumpscareUI.TriggerJumpScare();
     }
 
+    private IEnumerator WaitAndPatrolNextPoint()
+    {
+        isWaiting = true;
+        yield return new WaitForSeconds(waitTimeAtPatrolPoint);
+        isWaiting = false;
+        PatrolNextPoint();
+    }
+
+    private void PatrolNextPoint()
+    {
+        if (patrolPoints.Length > 0)
+        {
+            navMeshAgent.destination = patrolPoints[currentPatrolIndex].position;
+            currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+        }
+    }
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;
@@ -183,4 +208,6 @@ public class Enemy_Entity : Base_Entity
 
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
+
+    
 }
