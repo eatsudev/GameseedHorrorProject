@@ -7,8 +7,10 @@ public class Progress_Manager : MonoBehaviour
     public static Progress_Manager instance;
 
     private int flowerBurned;
+
     private Flower flower;
     public Ritual_Circle ritual_Circle;
+    public GameObject victoryScreen;
 
     private void Awake()
     {
@@ -39,6 +41,8 @@ public class Progress_Manager : MonoBehaviour
     {
         flowerBurned++;
 
+        Entities_Manager.Instance.enemy.speedModifier += 0.2f;
+
         if(flowerBurned >= 10)
         {
             Victory();
@@ -60,7 +64,8 @@ public class Progress_Manager : MonoBehaviour
 
     private void Victory()
     {
-
+        Destroy(Entities_Manager.Instance.enemy.gameObject);
+        InGame_UI_Manager.Instance.victoryScreenUI.ShowVictoryScreen();
     }
 
     #endregion

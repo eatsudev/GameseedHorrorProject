@@ -68,7 +68,7 @@ public class Ritual_Circle : Base_Interactable_Structure
 
         fireParticleSystem.Play();
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
 
         Debug.Log("Flower Burned");
         isInteractable = true;
@@ -76,5 +76,7 @@ public class Ritual_Circle : Base_Interactable_Structure
         Destroy(flower.gameObject);
 
         fireParticleSystem.Stop();
+
+        Progress_Manager.instance.AddFlowerBurned();
     }
 }
