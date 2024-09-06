@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.AI;
+using UnityEngine.Video;
+using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class Enemy_Entity : Base_Entity
 {
@@ -12,10 +16,14 @@ public class Enemy_Entity : Base_Entity
     public LayerMask playerLayer; 
     //public Animator ghostAnimator; 
     public AudioClip jumpScareSound;
-    public GameObject jumpScareObject;
+    //public GameObject jumpScareObject;
     private AudioSource audioSource;
     public GameObject deathScreen;
+    public float chaseSpeed = 5f;
+    public VideoPlayer jumpScareVideoPlayer;
+    public RawImage jumpScareScreen;
 
+    private NavMeshAgent navMeshAgent;
     private bool isPlayerDetected = false;
     private bool hasJumpScared = false;
 
@@ -27,7 +35,10 @@ public class Enemy_Entity : Base_Entity
         }
 
         audioSource = GetComponent<AudioSource>();
-        jumpScareObject.SetActive(false);
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.speed = chaseSpeed;
+        navMeshAgent.isStopped = true;
+        jumpScareScreen.gameObject.SetActive(false);
     }
 
     void Update()
@@ -57,27 +68,29 @@ public class Enemy_Entity : Base_Entity
 
     void MoveTowardsPlayer()
     {
-        Vector3 direction = (player.transform.position - transform.position).normalized;
-        transform.position += direction * moveSpeed * Time.deltaTime;
+        if(navMeshAgent != null && player != null)
+        {
+            navMeshAgent.isStopped = false;
+            navMeshAgent.SetDestination(player.transform.position);
+        }
     }
 
     IEnumerator TriggerJumpScare()
     {
         hasJumpScared = true;
-        CinemachineVirtualCamera playerCamera = player.GetComponentInChildren<CinemachineVirtualCamera>();
-        Vector3 scarePosition = playerCamera.transform.position + playerCamera.transform.forward * 3.5f;
-        jumpScareObject.transform.position = scarePosition;
+        navMeshAgent.isStopped = true;
 
-        jumpScareObject.transform.rotation = Quaternion.LookRotation(playerCamera.transform.forward);
-
-        jumpScareObject.SetActive(true);
+        jumpScareScreen.gameObject.SetActive(true);
+        jumpScareVideoPlayer.Play();
 
         if (jumpScareSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(jumpScareSound);
         }
-        yield return new WaitForSeconds(2f); 
-        jumpScareObject.SetActive(false);
+
+        yield return new WaitForSeconds((float)jumpScareVideoPlayer.clip.length);
+
+        jumpScareScreen.gameObject.SetActive(false);
         Destroy(gameObject);
         deathScreen.SetActive(true);
     }
