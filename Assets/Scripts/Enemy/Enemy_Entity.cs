@@ -12,20 +12,16 @@ public class Enemy_Entity : Base_Entity
     public float detectionRadius = 10f; 
     public float jumpScareDistance = 5f; 
     public float moveSpeed = 2f;
+    public float chaseSpeed = 5f;
+    public float speedModifier = 1f;
 
-    
+
     public LayerMask playerLayer;
     
 
     //public Animator ghostAnimator; 
 
     //public GameObject jumpScareObject;
-
-
-    
-    public float chaseSpeed = 5f;
-    
-    
 
 
     private Player_Entity player;
@@ -50,6 +46,7 @@ public class Enemy_Entity : Base_Entity
 
             if (player)
             {
+                Debug.Log("Detected");
                 MoveTowardsPlayer();
 
                 float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
@@ -60,6 +57,8 @@ public class Enemy_Entity : Base_Entity
                 }
             }
         }
+
+        navMeshAgent.speed = chaseSpeed * speedModifier;
     }
 
     void DetectPlayer()
@@ -69,10 +68,11 @@ public class Enemy_Entity : Base_Entity
         Player_Entity newest_Player = null;
         foreach (Collider hit in hits)
         {
-            newest_Player = hit.gameObject.GetComponent<Player_Entity>();
+            newest_Player = hit.gameObject.GetComponentInChildren<Player_Entity>();
             if (newest_Player)
             {
                 player = newest_Player;
+                return;
             }
         }
 
