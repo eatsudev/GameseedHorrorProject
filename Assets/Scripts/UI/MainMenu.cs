@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour
     }
     public void PlayButton()
     {
-        SceneManager.LoadScene("derriel");
+        SceneManager.LoadScene("Opening");
         Time.timeScale = 1.0f;
     }
 

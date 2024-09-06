@@ -7,6 +7,7 @@ public class Progress_Manager : MonoBehaviour
     public static Progress_Manager instance;
 
     private int flowerBurned;
+    private Flower flower;
     public Ritual_Circle ritual_Circle;
 
     private void Awake()
