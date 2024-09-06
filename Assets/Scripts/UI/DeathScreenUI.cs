@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class DeathScreen : MonoBehaviour
+public class DeathScreenUI : MonoBehaviour
 {
+    public GameObject deathScreen;
+
     public Button retryButton;
     public Button backToMenuButton;
 
@@ -13,6 +15,17 @@ public class DeathScreen : MonoBehaviour
     {
         retryButton.onClick.AddListener(Retry);
         backToMenuButton.onClick.AddListener(BackToMenu);
+
+        deathScreen.SetActive(false);
+    }
+
+    public void ShowDeathScreen()
+    {
+        deathScreen.SetActive(true);
+    }
+    public void HideDeathScreen()
+    {
+        deathScreen.SetActive(false);
     }
 
     public void Retry()

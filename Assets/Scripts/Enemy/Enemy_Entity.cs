@@ -12,33 +12,34 @@ public class Enemy_Entity : Base_Entity
     public float detectionRadius = 10f; 
     public float jumpScareDistance = 5f; 
     public float moveSpeed = 2f;
-    public GameObject player;
-    public LayerMask playerLayer; 
-    //public Animator ghostAnimator; 
-    public AudioClip jumpScareSound;
-    //public GameObject jumpScareObject;
-    private AudioSource audioSource;
-    public GameObject deathScreen;
-    public float chaseSpeed = 5f;
-    public VideoPlayer jumpScareVideoPlayer;
-    public RawImage jumpScareScreen;
 
+    
+    public LayerMask playerLayer;
+    
+
+    //public Animator ghostAnimator; 
+
+    //public GameObject jumpScareObject;
+
+
+    
+    public float chaseSpeed = 5f;
+    
+    
+
+
+    private Player_Entity player;
+    private AudioSource audioSource;
     private NavMeshAgent navMeshAgent;
-    private bool isPlayerDetected = false;
+
     private bool hasJumpScared = false;
 
     void Start()
     {
-        if (player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player"); 
-        }
-
         audioSource = GetComponent<AudioSource>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = chaseSpeed;
         navMeshAgent.isStopped = true;
-        jumpScareScreen.gameObject.SetActive(false);
     }
 
     void Update()
@@ -47,14 +48,15 @@ public class Enemy_Entity : Base_Entity
         {
             DetectPlayer();
 
-            if (isPlayerDetected)
+            if (player)
             {
                 MoveTowardsPlayer();
 
                 float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
                 if (distanceToPlayer <= jumpScareDistance)
                 {
-                    StartCoroutine(TriggerJumpScare());
+
+                    TriggerJumpScare();
                 }
             }
         }
@@ -63,7 +65,21 @@ public class Enemy_Entity : Base_Entity
     void DetectPlayer()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, detectionRadius, playerLayer);
-        isPlayerDetected = hits.Length > 0;
+
+        Player_Entity newest_Player = null;
+        foreach (Collider hit in hits)
+        {
+            newest_Player = hit.gameObject.GetComponent<Player_Entity>();
+            if (newest_Player)
+            {
+                player = newest_Player;
+            }
+        }
+
+        if(newest_Player == null)
+        {
+            player = null;
+        }
     }
 
     void MoveTowardsPlayer()
@@ -75,24 +91,12 @@ public class Enemy_Entity : Base_Entity
         }
     }
 
-    IEnumerator TriggerJumpScare()
+    private void TriggerJumpScare()
     {
         hasJumpScared = true;
         navMeshAgent.isStopped = true;
 
-        jumpScareScreen.gameObject.SetActive(true);
-        jumpScareVideoPlayer.Play();
-
-        if (jumpScareSound != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(jumpScareSound);
-        }
-
-        yield return new WaitForSeconds((float)jumpScareVideoPlayer.clip.length);
-
-        jumpScareScreen.gameObject.SetActive(false);
-        Destroy(gameObject);
-        deathScreen.SetActive(true);
+        InGame_UI_Manager.Instance.jumpscareUI.TriggerJumpScare();
     }
 
     void OnDrawGizmosSelected()
