@@ -64267,6 +64267,74 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7bb9e841df51334dba0647018f6967a, type: 3}
+--- !u!1001 &7300046740616803369
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 518347468068294265, guid: f51fb8290d67f4440a9200e38803413c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.509
+      objectReference: {fileID: 0}
+    - target: {fileID: 518347468068294265, guid: f51fb8290d67f4440a9200e38803413c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.193
+      objectReference: {fileID: 0}
+    - target: {fileID: 518347468068294265, guid: f51fb8290d67f4440a9200e38803413c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -81.068
+      objectReference: {fileID: 0}
+    - target: {fileID: 518347468068294265, guid: f51fb8290d67f4440a9200e38803413c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 518347468068294265, guid: f51fb8290d67f4440a9200e38803413c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 518347468068294265, guid: f51fb8290d67f4440a9200e38803413c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 518347468068294265, guid: f51fb8290d67f4440a9200e38803413c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 518347468068294265, guid: f51fb8290d67f4440a9200e38803413c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 518347468068294265, guid: f51fb8290d67f4440a9200e38803413c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 518347468068294265, guid: f51fb8290d67f4440a9200e38803413c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 899131037670397123, guid: f51fb8290d67f4440a9200e38803413c,
+        type: 3}
+      propertyPath: m_Name
+      value: moon flower fase 1,2,3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f51fb8290d67f4440a9200e38803413c, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -64299,3 +64367,4 @@ SceneRoots:
   - {fileID: 385160556}
   - {fileID: 4834404224991497573}
   - {fileID: 3230517786764586818}
+  - {fileID: 7300046740616803369}
