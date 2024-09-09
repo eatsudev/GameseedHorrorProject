@@ -5,6 +5,7 @@ using UnityEngine;
 public class Pig : Base_Holdable_Items
 {
     public AudioClip pigSounds;
+    public float pigLoudness = 15f;
 
     private AudioSource audioSource;
     private Player_Entity player;
@@ -22,11 +23,15 @@ public class Pig : Base_Holdable_Items
         {
             CheckPlayer();
         }
+        else
+        {
+            Entities_Manager.Instance.enemy.DetectLoudness(pigLoudness, transform);
+        }
     }
 
     private void CheckPlayer()
     {
-        if(Vector3.Distance(player.transform.position, transform.position) > 0f)
+        if(Vector3.Distance(player.transform.position, transform.position) < 5f)
         {
             StartCoroutine(PigScaredProcess());
         }

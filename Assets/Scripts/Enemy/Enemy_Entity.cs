@@ -35,6 +35,7 @@ public class Enemy_Entity : Base_Entity
 
 
     private Player_Entity player;
+    private Transform target;
     private AudioSource audioSource;
     private NavMeshAgent navMeshAgent;
 
@@ -57,18 +58,26 @@ public class Enemy_Entity : Base_Entity
     {
         if (!hasJumpScared)
         {
-            //DetectPlayer();
 
             if (player)
             {
                 Debug.Log("Detected");
-                MoveTowardsPlayer();
+                MoveTowardsTarget(player.transform);
 
                 float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
                 if (distanceToPlayer <= jumpScareDistance)
                 {
-
                     TriggerJumpScare();
+                }
+            }
+            else if (target)
+            {
+                MoveTowardsTarget(target.transform);
+
+                float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+                if (distanceToTarget <= 2f)
+                {
+                    target = null;
                 }
             }
             else if (!isWaiting && !navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
@@ -84,9 +93,10 @@ public class Enemy_Entity : Base_Entity
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
 
             DetectPlayerWithFOV();
+            DetectLoudness(LoudnessFrom_Microphone.instance.Loudness(), Entities_Manager.Instance.player.transform);
         }
     }
 
@@ -101,7 +111,7 @@ public class Enemy_Entity : Base_Entity
             if (newest_Player)
             {
                 player = newest_Player;
-                Debug.Log("Detected Player");
+                
                 Vector3 dir = (player.transform.position - transform.position).normalized;
 
                 distance = Vector3.Distance(player.transform.position, transform.position);
@@ -115,6 +125,7 @@ public class Enemy_Entity : Base_Entity
                 {
                     if (!Physics.Raycast(transform.position, dir, distance, obstructionLayer))
                     {
+                        Debug.Log("Detected Player");
                         return;
                     }
                     else
@@ -135,13 +146,45 @@ public class Enemy_Entity : Base_Entity
         }
     }
 
-
-    void MoveTowardsPlayer()
+    /*private void DetectPlayerLoudness()
     {
-        if(navMeshAgent != null && player != null)
+        if (player == null)
+        {
+            Player_Entity tempPlayer = Entities_Manager.Instance.player;
+            float playerLoudness = LoudnessFrom_Microphone.instance.Loudness();
+
+            if (Vector3.Distance(transform.position, tempPlayer.transform.position) < playerLoudness)
+            {
+                target = new GameObject().transform;
+                target.transform.position = tempPlayer.transform.position;
+
+                Debug.Log("heard Player");
+                Debug.Log(target);
+            }
+        }
+    }*/
+
+    public void DetectLoudness(float loudness, Transform source)
+    {
+        if (player == null)
+        {
+            if (Vector3.Distance(transform.position, source.transform.position) < loudness)
+            {
+                target = new GameObject().transform;
+                target.transform.position = source.transform.position;
+
+                Debug.Log("heard Sound and is Investigating");
+                Debug.Log(target);
+            }
+        }
+    }
+
+    void MoveTowardsTarget(Transform target)
+    {
+        if(navMeshAgent != null && target != null)
         {
             navMeshAgent.isStopped = false;
-            navMeshAgent.SetDestination(player.transform.position);
+            navMeshAgent.SetDestination(target.transform.position);
         }
     }
 

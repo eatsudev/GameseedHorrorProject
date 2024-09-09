@@ -4,10 +4,24 @@ using UnityEngine;
 
 public class Audio_Detection : MonoBehaviour
 {
+    public static Audio_Detection Instance;
+
     public bool isUsingMic = true;
     public int sampleWindow = 64;
 
     private AudioClip micClip;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         if (isUsingMic)

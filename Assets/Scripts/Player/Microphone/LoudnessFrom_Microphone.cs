@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LoudnessFrom_Microphone : MonoBehaviour
 {
+    public static LoudnessFrom_Microphone instance;
     public Audio_Detection detection;
     private AudioSource audioSource;
 
@@ -14,6 +15,17 @@ public class LoudnessFrom_Microphone : MonoBehaviour
     public float threshold = 0.1f;
 
     private float currLoudness;
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -30,7 +42,7 @@ public class LoudnessFrom_Microphone : MonoBehaviour
             currLoudness = 0;
         }
 
-        Debug.Log(Mathf.Clamp(currLoudness, minLoudness, maxLoudness));
+        //Debug.Log(Mathf.Clamp(currLoudness, minLoudness, maxLoudness));
     }
 
     public float Loudness()

@@ -75,8 +75,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af44d5e303fa54448d7ccd0f5da4b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectRadius: 10
-  detectAngle: 130
+  minimumDetectRadius: 2
+  maximumDetectRadius: 15
+  defaultDetectAngle: 45
   jumpScareDistance: 1.84
   moveSpeed: 5
   chaseSpeed: 3.5
