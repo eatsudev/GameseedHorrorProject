@@ -98,6 +98,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""ae646a3c-2fdb-4753-b4f6-1f58cbece8e2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -375,6 +384,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""ReloadFlashlight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a8b632eb-30bb-4474-94db-748ab02d2966"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -420,12 +440,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Click"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""aafd11dd-cff2-4cac-a7ef-0b3255373455"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""ScrollWheel"",
@@ -968,6 +988,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_DropItem = m_Player.FindAction("DropItem", throwIfNotFound: true);
         m_Player_ToggleFlashLight = m_Player.FindAction("ToggleFlashLight", throwIfNotFound: true);
         m_Player_ReloadFlashlight = m_Player.FindAction("ReloadFlashlight", throwIfNotFound: true);
+        m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1049,6 +1070,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_DropItem;
     private readonly InputAction m_Player_ToggleFlashLight;
     private readonly InputAction m_Player_ReloadFlashlight;
+    private readonly InputAction m_Player_Escape;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1061,6 +1083,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @DropItem => m_Wrapper.m_Player_DropItem;
         public InputAction @ToggleFlashLight => m_Wrapper.m_Player_ToggleFlashLight;
         public InputAction @ReloadFlashlight => m_Wrapper.m_Player_ReloadFlashlight;
+        public InputAction @Escape => m_Wrapper.m_Player_Escape;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1094,6 +1117,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ReloadFlashlight.started += instance.OnReloadFlashlight;
             @ReloadFlashlight.performed += instance.OnReloadFlashlight;
             @ReloadFlashlight.canceled += instance.OnReloadFlashlight;
+            @Escape.started += instance.OnEscape;
+            @Escape.performed += instance.OnEscape;
+            @Escape.canceled += instance.OnEscape;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1122,6 +1148,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ReloadFlashlight.started -= instance.OnReloadFlashlight;
             @ReloadFlashlight.performed -= instance.OnReloadFlashlight;
             @ReloadFlashlight.canceled -= instance.OnReloadFlashlight;
+            @Escape.started -= instance.OnEscape;
+            @Escape.performed -= instance.OnEscape;
+            @Escape.canceled -= instance.OnEscape;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1312,6 +1341,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnDropItem(InputAction.CallbackContext context);
         void OnToggleFlashLight(InputAction.CallbackContext context);
         void OnReloadFlashlight(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

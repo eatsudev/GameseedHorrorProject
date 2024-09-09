@@ -68,12 +68,7 @@ public class CrouchController : MonoBehaviour
                 transposer.m_FollowOffset.y = Mathf.Lerp(transposer.m_FollowOffset.y, targetCameraPosition.y, Time.deltaTime * crouchSpeed);
             }
         }
-
-        
-
-        Debug.Log(isCrouching);
     }
-
 
     private void OnCrouch(InputAction.CallbackContext ctx)
     {
