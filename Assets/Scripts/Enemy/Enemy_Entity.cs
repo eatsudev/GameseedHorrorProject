@@ -13,10 +13,11 @@ using Unity.PlasticSCM.Editor.WebApi;
 
 public class Enemy_Entity : Base_Entity
 {
-    public float detectRadius = 10f;
+    public float minimumDetectRadius = 2f;
+    public float maximumDetectRadius = 10f;
     [Range(0f, 360f)]
-    public float detectAngle = 45f;
-    public float jumpScareDistance = 5f; 
+    public float defaultDetectAngle = 45f;
+    public float jumpScareDistance = 5f;
     public float moveSpeed = 2f;
     public float chaseSpeed = 5f;
     public float speedModifier = 1f;
@@ -36,6 +37,9 @@ public class Enemy_Entity : Base_Entity
     private Player_Entity player;
     private AudioSource audioSource;
     private NavMeshAgent navMeshAgent;
+
+    private float distance;
+    private float currentDetectAngle;
     private bool hasJumpScared = false;
     private int currentPatrolIndex = 0;
     private bool isWaiting = false;
@@ -76,27 +80,6 @@ public class Enemy_Entity : Base_Entity
         navMeshAgent.speed = player ? chaseSpeed * speedModifier : moveSpeed;
     }
 
-    void DetectPlayer()
-    {
-        Collider[] hits = Physics.OverlapSphere(transform.position, detectRadius, playerLayer);
-
-        Player_Entity newest_Player = null;
-        foreach (Collider hit in hits)
-        {
-            newest_Player = hit.gameObject.GetComponentInChildren<Player_Entity>();
-            if (newest_Player)
-            {
-                player = newest_Player;
-                return;
-            }
-        }
-
-        if(newest_Player == null)
-        {
-            player = null;
-        }
-    }
-
     private IEnumerator DetectPlayerProcess()
     {
         while (true)
@@ -109,7 +92,7 @@ public class Enemy_Entity : Base_Entity
 
     private void DetectPlayerWithFOV()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, detectRadius, playerLayer);
+        Collider[] hits = Physics.OverlapSphere(transform.position, maximumDetectRadius, playerLayer);
 
         Player_Entity newest_Player = null;
         foreach (Collider hit in hits)
@@ -121,11 +104,16 @@ public class Enemy_Entity : Base_Entity
                 Debug.Log("Detected Player");
                 Vector3 dir = (player.transform.position - transform.position).normalized;
 
-                if(Vector3.Angle(transform.forward, dir) < detectAngle / 2)
-                {
-                    float distance = Vector3.Distance(player.transform.position, transform.position);
+                distance = Vector3.Distance(player.transform.position, transform.position);
 
-                    if(!Physics.Raycast(transform.position, dir, distance, obstructionLayer))
+                // Adjust the detect angle based on player's distance
+                float t = Mathf.InverseLerp(minimumDetectRadius, maximumDetectRadius, distance); // Value between 0 and 1
+
+                currentDetectAngle = Mathf.Lerp(360f, defaultDetectAngle, t); // Lerp between 360 and defaultDetectAngle
+
+                if (Vector3.Angle(transform.forward, dir) < currentDetectAngle / 2)
+                {
+                    if (!Physics.Raycast(transform.position, dir, distance, obstructionLayer))
                     {
                         return;
                     }
@@ -133,7 +121,6 @@ public class Enemy_Entity : Base_Entity
                     {
                         player = null;
                     }
-                    
                 }
                 else
                 {
@@ -147,6 +134,7 @@ public class Enemy_Entity : Base_Entity
             player = null;
         }
     }
+
 
     void MoveTowardsPlayer()
     {
@@ -185,14 +173,14 @@ public class Enemy_Entity : Base_Entity
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, detectRadius);
+        Gizmos.DrawWireSphere(transform.position, distance);
 
         Gizmos.color = Color.yellow;
 
-        Vector3 viewAngle01 = DirectionFromAngle(transform.eulerAngles.y, -detectAngle / 2);
-        Vector3 viewAngle02 = DirectionFromAngle(transform.eulerAngles.y, detectAngle / 2);
-        Gizmos.DrawLine(transform.position, transform.position + viewAngle01 * detectRadius);
-        Gizmos.DrawLine(transform.position, transform.position + viewAngle02 * detectRadius);
+        Vector3 viewAngle01 = DirectionFromAngle(transform.eulerAngles.y, -currentDetectAngle / 2);
+        Vector3 viewAngle02 = DirectionFromAngle(transform.eulerAngles.y, currentDetectAngle / 2);
+        Gizmos.DrawLine(transform.position, transform.position + viewAngle01 * currentDetectAngle);
+        Gizmos.DrawLine(transform.position, transform.position + viewAngle02 * currentDetectAngle);
 
         if (player)
         {
