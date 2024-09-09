@@ -13,6 +13,7 @@ public class Pig : Base_Holdable_Items
     void Start()
     {
         player = Entities_Manager.Instance.player;
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()

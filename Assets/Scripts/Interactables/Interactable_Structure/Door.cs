@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Door : Base_Interactable_Structure
 {
+    public AudioClip openDoorClip;
+    public AudioClip closeDoorClip;
+
     private Animator animator;
-    private new Collider collider;
+    private Collider collider;
+    private AudioSource audioSource;
 
     private bool isOpen;
     
@@ -15,6 +19,7 @@ public class Door : Base_Interactable_Structure
     {
         animator = GetComponent<Animator>();
         collider = GetComponent<Collider>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -44,12 +49,21 @@ public class Door : Base_Interactable_Structure
     public void OpenDoor()
     {
         animator.SetTrigger("OpenDoor");
+
+        audioSource.clip = openDoorClip;
+        audioSource.Play();
+
         StartCoroutine(DisableColliderDuringAnimation());
+        
     }
 
     public void CloseDoor()
     {
         animator.SetTrigger("CloseDoor");
+
+        audioSource.clip = closeDoorClip;
+        audioSource.Play();
+
         StartCoroutine(DisableColliderDuringAnimation());
     }
 
