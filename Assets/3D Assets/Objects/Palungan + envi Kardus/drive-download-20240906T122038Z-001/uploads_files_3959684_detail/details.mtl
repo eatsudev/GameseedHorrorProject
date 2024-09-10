@@ -1,0 +1,58 @@
+# Blender MTL File: 'details.blend'
+# Material Count: 4
+
+newmtl None
+Ns 500.000001
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump plank\\untitled_None_Normal.png
+map_Kd plank\\untitled_None_BaseColor.png
+map_Ns plank\\untitled_None_Roughness.png
+refl plank\\untitled_None_Metallic.png
+
+newmtl None.001
+Ns 500.000001
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump manger\\manger_None_Normal.png
+map_Kd manger\\manger_None_BaseColor.png
+map_Ns manger\\manger_None_Roughness.png
+refl manger\\manger_None_Metallic.png
+
+newmtl None.002
+Ns 500.000001
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump box01\\box 01_None_Normal.png
+map_Kd box01\\box 01_None_BaseColor.png
+map_Ns box01\\box 01_None_Roughness.png
+refl box01\\box 01_None_Metallic.png
+
+newmtl None.003
+Ns 500.000001
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump box\\box_None_Normal.png
+map_Kd box\\box_None_BaseColor.png
+map_Ns box\\box_None_Roughness.png
+refl box\\box_None_Metallic.png
