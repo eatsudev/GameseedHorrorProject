@@ -11,6 +11,7 @@ public class Pig : Base_Holdable_Items
     private Player_Entity player;
 
     private bool isScared = false;
+    private bool isPickedUp = false;
     void Start()
     {
         player = Entities_Manager.Instance.player;
@@ -19,7 +20,7 @@ public class Pig : Base_Holdable_Items
 
     void Update()
     {
-        if (!isScared)
+        if (!isScared && !isPickedUp)
         {
             CheckPlayer();
         }
@@ -31,7 +32,7 @@ public class Pig : Base_Holdable_Items
 
     private void CheckPlayer()
     {
-        if(Vector3.Distance(player.transform.position, transform.position) < 5f)
+        if(Vector3.Distance(player.transform.position, transform.position) < 5f )
         {
             StartCoroutine(PigScaredProcess());
         }
@@ -53,5 +54,23 @@ public class Pig : Base_Holdable_Items
 
         audioSource.Stop();
         isScared = false;
+    }
+
+    public override void Interact()
+    {
+        base.Interact();
+
+        StopAllCoroutines();
+
+        audioSource.Stop();
+        isScared = false;
+        isPickedUp = true;
+    }
+
+    public override void ActivateRigidBody()
+    {
+        base.ActivateRigidBody();
+
+        isPickedUp = false;
     }
 }

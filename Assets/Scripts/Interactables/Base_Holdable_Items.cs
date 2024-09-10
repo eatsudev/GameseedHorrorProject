@@ -26,13 +26,13 @@ public class Base_Holdable_Items : MonoBehaviour, IInteractable
 
     }
 
-    public void ActivateRigidBody()
+    public virtual void ActivateRigidBody()
     {
         rigidbody.useGravity = true;
         rigidbody.constraints = RigidbodyConstraints.None;
     }
 
-    public void DeactivateRigidBody()
+    public virtual void DeactivateRigidBody()
     {
         rigidbody.useGravity = false;
         rigidbody.constraints = RigidbodyConstraints.FreezeAll;
