@@ -4376,9 +4376,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5be2c5741001b764d95b136b1cbc90c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpscareUI: {fileID: 0}
-  deathScreenUI: {fileID: 0}
-  victoryScreenUI: {fileID: 0}
+  jumpscareUI: {fileID: 5534647638372917708}
+  deathScreenUI: {fileID: 7518056020123240808}
+  victoryScreenUI: {fileID: 7935673063021003190}
 --- !u!114 &4104961543547440698
 MonoBehaviour:
   m_ObjectHideFlags: 0

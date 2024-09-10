@@ -14,6 +14,7 @@ public class Player_FlashLight_Manager : MonoBehaviour
     public List<Image> Charge;
     public HorizontalLayoutGroup chargeHorizontalLayoutGroup;
     public TextMeshProUGUI warningText;
+    public AudioSource flashlightSFX;
 
 
     [SerializeField] private float maxFLCharge;
@@ -115,12 +116,14 @@ public class Player_FlashLight_Manager : MonoBehaviour
     {
         flashLight.enabled = true;
         isFLActive = true;
+        flashlightSFX.Play();
     }
 
     private void TurnOffFL()
     {
         flashLight.enabled = false;
         isFLActive = false;
+        flashlightSFX.Play();
     }
 
     public void SetFLIntensity(float newIntensity)
