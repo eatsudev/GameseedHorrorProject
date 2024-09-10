@@ -35,6 +35,7 @@ public class Audio_Detection : MonoBehaviour
         micClip = Microphone.Start(micName, true, 20, AudioSettings.outputSampleRate);
 
         Debug.Log(micName);
+        Debug.Log(Microphone.devices);
     }
 
     public float GetLoudnessFromMic()
@@ -60,7 +61,7 @@ public class Audio_Detection : MonoBehaviour
         {
             totalLoudness += Mathf.Abs(waveData[i]);
         }
-
+        Debug.Log(totalLoudness);
         return totalLoudness / sampleWindow;
     }
 }
