@@ -2150,6 +2150,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 100996798802981104, guid: f9ebedcdcf1d99f4fb4147396a69288a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2823710163368425272, guid: f9ebedcdcf1d99f4fb4147396a69288a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2364,6 +2369,36 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 946545244818202764, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 946545244818202764, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 946545244818202764, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 957042227697738182, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 957042227697738182, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 957042227697738182, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2951185974231690679, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2414,6 +2449,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3643044638405887748, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3643044638405887748, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4104961543547440698, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
         type: 3}
       propertyPath: enemy
@@ -2434,10 +2479,45 @@ PrefabInstance:
       propertyPath: ritual_Circle
       value: 
       objectReference: {fileID: 2082943365}
+    - target: {fileID: 7668149062445989831, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668149062445989831, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668149062445989831, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7753905562655571949, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
         type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7969989098395430858, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7969989098395430858, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251887105701348487, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251887105701348487, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
