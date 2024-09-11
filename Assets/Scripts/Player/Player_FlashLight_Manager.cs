@@ -26,8 +26,8 @@ public class Player_FlashLight_Manager : MonoBehaviour
     void Start()
     {
         currFLCharge = maxFLCharge;
-        
-        chargeHorizontalLayoutGroup.enabled = false;
+
+        StartCoroutine(Initialize());
         UpdateChargeDisplay();
 
         PlayerInputActions playerInputActions = new PlayerInputActions();
@@ -42,6 +42,15 @@ public class Player_FlashLight_Manager : MonoBehaviour
     void Update()
     {
         ManageCharge();
+    }
+
+    private IEnumerator Initialize()
+    {
+        chargeHorizontalLayoutGroup.enabled = true;
+        yield return new WaitForSeconds(0.1f);
+        chargeHorizontalLayoutGroup.enabled = false;
+
+        UpdateChargeDisplay();
     }
 
     #region Managing FlashLight
