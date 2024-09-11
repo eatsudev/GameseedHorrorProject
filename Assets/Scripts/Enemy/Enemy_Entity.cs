@@ -44,20 +44,27 @@ public class Enemy_Entity : Base_Entity
     private bool hasJumpScared = false;
     private int currentPatrolIndex = 0;
     private bool isWaiting = false;
+    private bool isStunned = false;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = chaseSpeed;
-        navMeshAgent.isStopped = true;
+        navMeshAgent.isStopped = false;
         StartCoroutine(DetectPlayerProcess());
+        StartCoroutine(WaitAndPatrolNextPoint());
     }
 
     void Update()
     {
         if (!hasJumpScared)
         {
+            if (isStunned)
+            {
+                StopEnemy();
+                return;
+            }
 
             if (player)
             {
@@ -186,6 +193,13 @@ public class Enemy_Entity : Base_Entity
             navMeshAgent.isStopped = false;
             navMeshAgent.SetDestination(target.transform.position);
         }
+    }
+
+
+    void StopEnemy()
+    {
+        navMeshAgent.SetDestination(transform.position);
+        navMeshAgent.isStopped = true;
     }
 
     private void TriggerJumpScare()

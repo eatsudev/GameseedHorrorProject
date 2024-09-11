@@ -1889,7 +1889,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 2
@@ -2037,9 +2037,10 @@ AudioSource:
   m_GameObject: {fileID: 6711742998678944301}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4348002967877975082, guid: 9b35e36148cd6994189ee7e42560fbf5,
+    type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -2140,10 +2141,10 @@ MonoBehaviour:
   m_CrouchSpeed: 2.5
   m_WalkSpeed: 5
   m_RunSpeed: 10
-  m_RunstepLenghten: 0
+  m_RunstepLenghten: 0.5
   m_JumpSpeed: 5
-  m_StickToGroundForce: 0
-  m_GravityMultiplier: 0
+  m_StickToGroundForce: 2
+  m_GravityMultiplier: 1
   m_MouseLook:
     XSensitivity: 2
     YSensitivity: 2
@@ -2217,11 +2218,12 @@ MonoBehaviour:
   m_JumpBob:
     BobDuration: 1
     BobAmount: 1
-  m_StepInterval: 0
+  m_StepInterval: 5
   m_FootstepSounds:
-  - {fileID: 0}
-  m_JumpSound: {fileID: 0}
-  m_LandSound: {fileID: 0}
+  - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
+  - {fileID: 8300000, guid: 5a9383dda6cabc047b7a297602e93eb4, type: 3}
+  m_JumpSound: {fileID: 8300000, guid: 42e65e088b3f4374e851b8dbd38f3df9, type: 3}
+  m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
   cinemachineCamera: {fileID: 8148556652757381697}
 --- !u!114 &2634821102247706075
 MonoBehaviour:
