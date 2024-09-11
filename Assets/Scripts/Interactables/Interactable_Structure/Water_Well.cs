@@ -22,6 +22,9 @@ public class Water_Well : Base_Interactable_Structure
         base.Interact();
 
         Base_Holdable_Items playerHeldItem = Player_Hold_Manager.instance.GetHeldItem();
+
+        if (!playerHeldItem) return;
+
         Water_Bucket bucket = playerHeldItem.GetComponent<Water_Bucket>();
 
         if (bucket)

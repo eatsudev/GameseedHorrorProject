@@ -9,7 +9,7 @@ public class Base_StoryItem : MonoBehaviour, IInteractable
     public Sprite itemImage;
     public AudioClip readingAudioClip;
 
-    public AudioClip clip;
+    public AudioClip interactedClip;
 
     public Vector3 eulerAngles_Offset = Vector3.zero;
     public float distanceFromCamera = 2f; // Set the distance from the player's camera
@@ -23,6 +23,8 @@ public class Base_StoryItem : MonoBehaviour, IInteractable
 
     private AudioSource audioSource;
     private Collider collider;
+
+    private bool hasRead;
     //private Rigidbody rigidbody;
 
     void Start()
@@ -58,6 +60,7 @@ public class Base_StoryItem : MonoBehaviour, IInteractable
         Player_Interaction.instance.ChangeInteractType(1);
         isInteractable = false;
         DeactivateCollider();
+        audioSource.PlayOneShot(interactedClip);
 
         Vector3 targetPosition = cameraTransform.position + cameraTransform.forward * distanceFromCamera;
         Vector3 targetRotation = cameraTransform.eulerAngles + eulerAngles_Offset;
@@ -80,6 +83,11 @@ public class Base_StoryItem : MonoBehaviour, IInteractable
         transform.position = targetPosition;
         transform.eulerAngles = targetRotation;
 
+        if (!hasRead)
+        {
+            hasRead = true;
+            audioSource.PlayOneShot(readingAudioClip);
+        }
         Item_Description_Manager.instance.OpenDisplay(this);
     }
 
