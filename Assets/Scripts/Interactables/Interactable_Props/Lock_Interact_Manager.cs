@@ -7,8 +7,14 @@ using UnityEngine.InputSystem;
 
 public class Lock_Interact_Manager : MonoBehaviour, IInteractable
 {
+    public AudioClip lockOpenClip;
+    
+    private Animator animator;
+    private AudioSource audioSource;
+
     public float distanceFromCamera = 2f; // Set the distance from the player's camera
     public float moveDuration = 0.5f;     // Time for the movement to complete
+    public float rotOffset = 36;
 
     [Serializable]
     public class Dial
@@ -20,6 +26,7 @@ public class Lock_Interact_Manager : MonoBehaviour, IInteractable
     public List<Dial> dials;
 
     public bool isInteractable = true;
+    private bool isUnlocked = false;
 
     private Transform cameraTransform;
     private Vector3 originalPosition;
@@ -27,6 +34,9 @@ public class Lock_Interact_Manager : MonoBehaviour, IInteractable
 
     void Start()
     {
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+
         cameraTransform = Camera.main.transform;
         originalPosition = transform.position;
         originalRotation = transform.rotation;
@@ -40,6 +50,7 @@ public class Lock_Interact_Manager : MonoBehaviour, IInteractable
         {
             dial.lockDial.SetLockManager(this);
             dial.lockDial.isInteractable = false;
+            dial.lockDial.transform.eulerAngles = new Vector3(dial.lockDial.transform.eulerAngles.x, dial.lockDial.transform.eulerAngles.y, rotOffset);
         }
     }
 
@@ -103,7 +114,15 @@ public class Lock_Interact_Manager : MonoBehaviour, IInteractable
         transform.position = originalPosition;
         transform.eulerAngles = originalRotation.eulerAngles;
 
-        isInteractable = true;
+        if (!isUnlocked)
+        {
+            isInteractable = true;
+        }
+        else
+        {
+            gameObject.AddComponent<Rigidbody>();
+            gameObject.GetComponent<Collider>().isTrigger = true;
+        }
     }
 
 
@@ -126,7 +145,19 @@ public class Lock_Interact_Manager : MonoBehaviour, IInteractable
             dial.lockDial.isInteractable = false;
         }
 
+        StartCoroutine(LockOpenedProcess());
         Debug.Log("correct combination");
+    }
+
+    private IEnumerator LockOpenedProcess()
+    {
+        animator.SetTrigger("Open");
+        audioSource.PlayOneShot(lockOpenClip);
+        yield return new WaitForSeconds(1f);
+
+
+        isUnlocked = true;
+        StartCoroutine(ReturnToOriginalPos());
     }
 
     public void Interact()

@@ -5,13 +5,30 @@ using UnityEngine.UIElements;
 
 public class LockDial : MonoBehaviour, IInteractable
 {
+    public AudioClip dialSpinClip;
+
     private int currNumber = 0;
     private Lock_Interact_Manager manager;
+    private AudioSource audioSource;
 
     public bool isInteractable = true;
 
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
     private void Rotate()
     {
+        isInteractable = false;
+
+        audioSource.PlayOneShot(dialSpinClip);
+
         StartCoroutine(RotationProcess());
     }
 
@@ -19,7 +36,7 @@ public class LockDial : MonoBehaviour, IInteractable
     {
         // Set up the initial rotation target based on the current number
         Quaternion startRotation = transform.rotation;
-        Quaternion endRotation = startRotation * Quaternion.Euler(36f, 0f, 0f); // Rotate 36 degrees on the x-axis
+        Quaternion endRotation = startRotation * Quaternion.Euler(0f, 0f, -36f); // Rotate 36 degrees on the x-axis
 
         // Define how long the rotation should take
         float rotationDuration = 0.5f; // Adjust the duration as needed
@@ -43,9 +60,9 @@ public class LockDial : MonoBehaviour, IInteractable
             currNumber = 0;
         }
 
-        manager.CheckCombination();
-
         isInteractable = true;
+
+        manager.CheckCombination();
     }
     public void Interact()
     {
