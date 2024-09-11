@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,12 +19,13 @@ public class Player_Interaction : MonoBehaviour
 
     private PlayerInput playerInput;
 
+    private GameObject highlight;
+
     private bool interacting;
     private bool raycastInteracting;
 
     public bool regularInteractMode = true;
     public bool raycastInteractMode = false;
-
 
     private string regularInteractText = "E to Interact";
     private string raycastInteractText = "Click to Interact";
@@ -117,6 +119,29 @@ public class Player_Interaction : MonoBehaviour
             {
                 if (interactable.IsInteractable())
                 {
+                    if (highlight != null)
+                    {
+                        if (highlight != raycastHit.transform.gameObject)
+                        {
+                            highlight.gameObject.GetComponent<Outline>().enabled = false;
+                        }
+                    }
+                    
+
+                    highlight = raycastHit.transform.gameObject;
+
+                    if (highlight.GetComponent<Outline>() != null)
+                    {
+                        highlight.GetComponent<Outline>().enabled = true;
+                    }
+                    else
+                    {
+                        Outline outline = highlight.gameObject.AddComponent<Outline>();
+                        outline.enabled = true;
+                        highlight.gameObject.GetComponent<Outline>().OutlineWidth = 10.0f;
+                    }
+
+
                     interactText.gameObject.SetActive(true);
                     if (interacting)
                     {
@@ -127,6 +152,14 @@ public class Player_Interaction : MonoBehaviour
                 }
             }
         }
+
+        if (highlight)
+        {
+            highlight.gameObject.GetComponent<Outline>().enabled = false;
+        }
+        
+        highlight = null;
+
         interactText.gameObject.SetActive(false);
     }
 
