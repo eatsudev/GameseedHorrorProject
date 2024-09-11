@@ -2135,6 +2135,31 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2233156234961539430, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
+        type: 3}
+      propertyPath: m_Spacing
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233156234961539430, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
+        type: 3}
+      propertyPath: m_Padding.m_Top
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233156234961539430, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
+        type: 3}
+      propertyPath: m_Padding.m_Left
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233156234961539430, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
+        type: 3}
+      propertyPath: m_Padding.m_Right
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233156234961539430, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
+        type: 3}
+      propertyPath: m_Padding.m_Bottom
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 3489893614818713841, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
         type: 3}
       propertyPath: field of view
@@ -2199,6 +2224,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4498574776828742929, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -1717.244
+      objectReference: {fileID: 0}
+    - target: {fileID: 4498574776828742929, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -1003.096
+      objectReference: {fileID: 0}
+    - target: {fileID: 4498574776828742929, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -839.8721
+      objectReference: {fileID: 0}
+    - target: {fileID: 4498574776828742929, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 480.9677
       objectReference: {fileID: 0}
     - target: {fileID: 4913509171273002127, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
         type: 3}
@@ -2320,6 +2365,17 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8006229120965774912, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006229120965774912, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a77e90e680472a245883007dfa11a775,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2976,7 +3032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   readingAudioClip: {fileID: 0}
-  interactedClip: {fileID: 8300000, guid: 4602aa93aa0480b44b03ef44fad899f2, type: 3}
+  interactedClip: {fileID: 8300000, guid: 67e79ba2ed7472b4fa2707654e681256, type: 3}
   eulerAngles_Offset: {x: 90, y: 0, z: 0}
   distanceFromCamera: 2
   moveDuration: 0.3
