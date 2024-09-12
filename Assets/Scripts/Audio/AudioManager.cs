@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -18,8 +19,23 @@ public class AudioManager : MonoBehaviour
     private float masterValue;
     private float bgmValue;
     private float sfxValue;
+    public static AudioManager instance;
 
     private float defaultVolume = 0.75f;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            //DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);  
+        }
+    }
+
     private void Start()
     {
         LoadVolumeSettings();
@@ -33,15 +49,34 @@ public class AudioManager : MonoBehaviour
         resetButton.onClick.AddListener(ResetVolumeSettings);
     }
 
-    private void LoadVolumeSettings()
+    private void OnEnable()
     {
-        masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", defaultVolume);
-        bgmSlider.value = PlayerPrefs.GetFloat("BGM", defaultVolume);
-        sfxSlider.value = PlayerPrefs.GetFloat("SFX", defaultVolume);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
-        SetMasterVolume(masterSlider.value);
-        SetBGMVolume(bgmSlider.value);
-        SetSFXVolume(sfxSlider.value);
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        LoadVolumeSettings();
+    }
+
+    public void LoadVolumeSettings()
+    {
+        float savedMasterVolume = PlayerPrefs.GetFloat("MasterVolume", defaultVolume);
+        float savedBGMVolume = PlayerPrefs.GetFloat("BGMVolume", defaultVolume);
+        float savedSFXVolume = PlayerPrefs.GetFloat("SFXVolume", defaultVolume);
+
+        masterSlider.value = savedMasterVolume;
+        bgmSlider.value = savedBGMVolume;
+        sfxSlider.value = savedSFXVolume;
+
+        SetMasterVolume(savedMasterVolume);
+        SetBGMVolume(savedBGMVolume);
+        SetSFXVolume(savedSFXVolume);
     }
 
     public void SetMasterVolume(float volume)

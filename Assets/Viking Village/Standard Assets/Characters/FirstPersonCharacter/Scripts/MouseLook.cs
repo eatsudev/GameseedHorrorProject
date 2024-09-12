@@ -20,9 +20,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private Quaternion m_CharacterTargetRot;
         private Quaternion m_CameraTargetRot;
 
-        private float xRotation = 0f;
-        private float yRotation = 0f;
-
 
         public void Init(Transform character, Transform camera)
         {
