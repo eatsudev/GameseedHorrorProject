@@ -1,9 +1,12 @@
 using Cinemachine;
 using System;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
@@ -29,8 +32,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+        [SerializeField] private float maxStamina = 100f;
+        [SerializeField] private float stamina = 100f;
+        [SerializeField] private float staminaDrainRate = 5f;
+        [SerializeField] private float staminaRegenRate = 4f;
+        [SerializeField] private float staminaRegenDelay = 4f;
+        [SerializeField] private Slider staminaSlider;
 
-
+        private float lastStaminaUseTime;
+        private bool isRegenerating = false;
 
         [SerializeField] private CinemachineVirtualCamera cinemachineCamera;
         private Camera m_Camera;
@@ -67,7 +77,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
-
+            staminaSlider.maxValue = maxStamina;
+            staminaSlider.value = stamina;
         }
 
 
@@ -95,10 +106,47 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
 
-            
+            HandleStaminaRegeneration();
+            staminaSlider.value = stamina;
+            Debug.Log("Run Speed :" + m_RunSpeed);
         }
 
-        
+        private void HandleStaminaRegeneration()
+        {
+            if(Time.time - lastStaminaUseTime >= staminaRegenDelay && !isRegenerating && stamina < maxStamina)
+            {
+                StartCoroutine(RegenerateStamina());
+            }
+        }
+
+        private IEnumerator RegenerateStamina()
+        {
+            isRegenerating = true;
+
+            while(stamina < maxStamina)
+            {
+                float targetStamina =  Mathf.Min(stamina + staminaRegenRate, maxStamina);
+                float elapsedTime = 0f;
+                float regenDuration = 2f;
+
+                float initialStamina = stamina;
+
+                while (elapsedTime < regenDuration)
+                {
+                    elapsedTime += Time.deltaTime;
+                    stamina = Mathf.Lerp(initialStamina, targetStamina, elapsedTime / regenDuration);
+                    staminaSlider.value = Mathf.Lerp(staminaSlider.value, stamina, elapsedTime / regenDuration);
+
+                    yield return null;
+                }
+                stamina = targetStamina;
+                staminaSlider.value = stamina;
+
+                //yield return new WaitForSeconds(2f);
+            }
+
+            isRegenerating = false;
+        }
 
         private void PlayLandingSound()
         {
@@ -224,12 +272,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             // Read input
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
-
             bool waswalking = m_IsWalking;
 
             // On standalone builds, walk/run speed is modified by a key press.
             // keep track of whether or not the character is walking or running
             m_IsWalking = !Input.GetKey(KeyCode.LeftShift);
+
             CrouchController crouchController = GetComponent<CrouchController>();
 
             // set the desired speed to be walking or running
@@ -241,6 +289,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (m_Input.sqrMagnitude > 1)
             {
                 m_Input.Normalize();
+            }
+
+            if(!m_IsWalking && stamina > 0 && m_Input.sqrMagnitude > 0)
+            {
+                stamina -= staminaDrainRate * Time.deltaTime;
+                lastStaminaUseTime = Time.time;
+                isRegenerating = false;
+            }
+
+            if(stamina <= 0)
+            {
+                speed = 5f;
+                m_IsWalking = true;
             }
 
             // handle speed change to give an fov kick
