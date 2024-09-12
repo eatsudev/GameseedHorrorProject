@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Key : Base_Holdable_Items
 {
-
-
     public override void Start()
     {
         base.Start();

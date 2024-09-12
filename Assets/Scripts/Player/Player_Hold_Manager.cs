@@ -8,6 +8,7 @@ public class Player_Hold_Manager : MonoBehaviour
 {
     public static Player_Hold_Manager instance;
 
+    public TextMeshProUGUI itemNameText;
     public TextMeshProUGUI warningText;
     public Transform holdPoint;
 
@@ -55,6 +56,8 @@ public class Player_Hold_Manager : MonoBehaviour
             itemHeld.transform.position = holdPoint.position;
             itemHeld.transform.parent = holdPoint;
             itemHeld.DeactivateRigidBody();
+
+            itemNameText.text = itemHeld.itemName;
         }
     }
 
@@ -74,10 +77,13 @@ public class Player_Hold_Manager : MonoBehaviour
         itemHeld.transform.parent = null;
         itemHeld.ActivateRigidBody();
         itemHeld = null;
+        itemNameText.text = "";
     }
 
     public void WarningOnItem(string warningMessage)
     {
+
+        StopAllCoroutines();
 
         StartCoroutine(WarningOnItemProcess(warningMessage));
 

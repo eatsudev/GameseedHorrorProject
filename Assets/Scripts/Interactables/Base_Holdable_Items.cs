@@ -5,10 +5,13 @@ using UnityEngine.UI;
 
 public class Base_Holdable_Items : MonoBehaviour, IInteractable
 {
+    public string itemName = "Item";
     public string textOnHover = "E To Pick Up";
     public Rigidbody rigidbody;
     public Vector3 rotationOnHold = Vector3.zero;
+
     public bool isInteractable = true;
+
     public float outlineDistance = 5f;
 
     private Player_Entity player;

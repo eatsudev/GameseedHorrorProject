@@ -40,7 +40,17 @@ public class Door : Base_Interactable_Structure
         base.Interact();
         if(isLocked)
         {
-            Key heldKey = Player_Hold_Manager.instance.GetHeldItem().GetComponent<Key>();
+            Base_Holdable_Items heldItem = Player_Hold_Manager.instance.GetHeldItem();
+
+            if (!heldItem)
+            {
+                Locked();
+
+                Player_Hold_Manager.instance.WarningOnItem("Need Key");
+                return;
+            }
+
+            Key heldKey = heldItem.GetComponent<Key>();
 
             if (!heldKey)
             {
@@ -127,7 +137,7 @@ public class Door : Base_Interactable_Structure
     {
         collider.enabled = false;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         collider.enabled = true;
     }
