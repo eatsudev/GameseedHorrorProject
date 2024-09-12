@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class Door : Base_Interactable_Structure
@@ -73,7 +74,7 @@ public class Door : Base_Interactable_Structure
             return;
         }
 
-        if (isOpen)
+        if (!isOpen)
         {
             OpenDoor();
         }
@@ -99,6 +100,8 @@ public class Door : Base_Interactable_Structure
 
     public void OpenDoor()
     {
+        isOpen = true;
+
         animator.SetTrigger("OpenDoor");
 
         audioSource.clip = openDoorClip;
@@ -110,6 +113,8 @@ public class Door : Base_Interactable_Structure
 
     public void CloseDoor()
     {
+        isOpen = false;
+
         animator.SetTrigger("CloseDoor");
 
         audioSource.clip = closeDoorClip;
