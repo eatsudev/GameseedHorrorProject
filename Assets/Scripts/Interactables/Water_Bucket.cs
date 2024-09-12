@@ -5,10 +5,8 @@ using UnityEngine;
 
 public class Water_Bucket : Base_Holdable_Items
 {
-    public GameObject currModel;
-
-    public GameObject emptyBucketPrefab;
-    public GameObject filledBucketPrefab;
+    public GameObject emptyBucketModelGO;
+    public GameObject filledBucketModelGO;
 
     private bool isFilledWithWater = false;
 
@@ -23,22 +21,16 @@ public class Water_Bucket : Base_Holdable_Items
     }
     public void FillWithWater()
     {
-        GameObject newGameObject = Instantiate(filledBucketPrefab, currModel.transform.position, currModel.transform.rotation, currModel.transform.parent);
-
-        Destroy(currModel);
-
-        currModel = newGameObject;
+        emptyBucketModelGO.SetActive(false);
+        filledBucketModelGO.SetActive(true);
 
         isFilledWithWater = true;
     }
 
     public void EmptyWater()
     {
-        GameObject newGameObject = Instantiate(emptyBucketPrefab, currModel.transform.position, currModel.transform.rotation, currModel.transform.parent);
-
-        Destroy(currModel);
-
-        currModel = newGameObject;
+        emptyBucketModelGO.SetActive(true);
+        filledBucketModelGO.SetActive(false);
 
         isFilledWithWater = false;
     }

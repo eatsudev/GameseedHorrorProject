@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static Plantation;
 
 public class Plantation : Base_Interactable_Structure
 {
@@ -26,6 +27,7 @@ public class Plantation : Base_Interactable_Structure
     private Flower flowerToHarvest;
 
     private bool isWatered;
+    private bool hasBeenHarvested;
     private bool seedIsPlanted = false;
     private bool isReadyToHarvest = false;
 
@@ -49,6 +51,11 @@ public class Plantation : Base_Interactable_Structure
     {
         base.Interact();
 
+        if (hasBeenHarvested)
+        {
+            Player_Hold_Manager.instance.WarningOnItem("Can no longer be used...");
+            return;
+        }
 
         if (Player_Hold_Manager.instance.IsHoldingItem())
         {
@@ -61,8 +68,7 @@ public class Plantation : Base_Interactable_Structure
                 {
                     StartGrowngSeed();
 
-                    Player_Hold_Manager.instance.WarningOnItem("Seed Planted");
-                    return;
+                    
                 }
                 else if(seedIsPlanted && !isWatered && !isReadyToHarvest)
                 {
@@ -185,12 +191,19 @@ public class Plantation : Base_Interactable_Structure
             currStage++;
             Destroy(currPlantGO);
             
+            
+
             currPlantGO = Instantiate(plantStage.plantStageModelPrefabs, plantPoint.position, Quaternion.identity, plantPoint);
             currPlantGO.transform.position = plantPoint.position;
 
+            if (currStage == plantStages.Count - 1)
+            {
+                break;
+            }
+
             while (!isWatered && currStage == 1)
             {
-                yield return null;
+                yield return new WaitForSeconds(0.1f);
             }
 
             yield return new WaitForSeconds(plantStage.growTime);
@@ -203,8 +216,14 @@ public class Plantation : Base_Interactable_Structure
     {
         Destroy(currPlantGO);
 
+        currPlantGO = Instantiate(plantStages[currStage].plantStageModelPrefabs, plantPoint.position, Quaternion.identity, plantPoint);
+        currPlantGO.transform.position = plantPoint.position;
+
+
         flowerToHarvest = Instantiate(flowerPrefab, plantPoint.position, Quaternion.identity, plantPoint);
         Player_Hold_Manager.instance.PickUpItem(flowerToHarvest);
+
+        hasBeenHarvested = true;
 
         currStage = 0;
         seedIsPlanted = false;

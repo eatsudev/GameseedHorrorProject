@@ -27,12 +27,28 @@ public class Base_Holdable_Items : MonoBehaviour, IInteractable
 
         outline.OutlineWidth = outlineDistance;
         outline.enabled = false;
+
+        StartCoroutine(CheckOutlineProcess());
     }
 
-    private void FixedUpdate()
+    private IEnumerator CheckOutlineProcess()
     {
-        if(Vector3.Distance(player.transform.position, transform.position) < outlineDistance)
+        while(true)
         {
+            yield return new WaitForSeconds(0.2f);
+            CheckOutline();
+        }
+    }
+
+    public virtual void CheckOutline()
+    {
+        if (Vector3.Distance(player.transform.position, transform.position) < outlineDistance)
+        {
+            if (Player_Hold_Manager.instance.GetHeldItem() == this)
+            {
+                outline.enabled = false;
+                return;
+            }
             outline.enabled = true;
         }
         else

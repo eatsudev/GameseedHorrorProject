@@ -63,6 +63,7 @@ public class Ritual_Circle : Base_Interactable_Structure
         flower.transform.position = flowerPoint.transform.position;
         flower.transform.parent = flowerPoint;
         flower.DeactivateRigidBody();
+        flower.isBurning = true;
 
         flowerIsBurning.Invoke();
 

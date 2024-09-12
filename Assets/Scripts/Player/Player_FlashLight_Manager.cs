@@ -6,10 +6,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class Player_FlashLight_Manager : MonoBehaviour
 {
-    public Light flashLight; //flashLight will now be shortened to FL for the rest of the code
+    public List<Light> flashLights; //flashLight will now be shortened to FL for the rest of the code
     public AudioClip toggleFLClip;
     public List<Image> Charge;
     public HorizontalLayoutGroup chargeHorizontalLayoutGroup;
@@ -36,7 +37,11 @@ public class Player_FlashLight_Manager : MonoBehaviour
         playerInputActions.Player.ToggleFlashLight.performed += ToggleFL;
         playerInputActions.Player.ReloadFlashlight.performed += OnReload;
 
-        flashLight.enabled = false;
+        foreach (Light light in flashLights)
+        {
+            light.enabled = false;
+        }
+        
     }
 
     void Update()
@@ -123,21 +128,30 @@ public class Player_FlashLight_Manager : MonoBehaviour
 
     private void TurnOnFL()
     {
-        flashLight.enabled = true;
+        foreach (Light light in flashLights)
+        {
+            light.enabled = true;
+        }
         isFLActive = true;
         flashlightSFX.Play();
     }
 
     private void TurnOffFL()
     {
-        flashLight.enabled = false;
+        foreach (Light light in flashLights)
+        {
+            light.enabled = false;
+        }
         isFLActive = false;
         flashlightSFX.Play();
     }
 
     public void SetFLIntensity(float newIntensity)
     {
-        flashLight.intensity = newIntensity;
+        foreach (Light light in flashLights)
+        {
+            light.intensity = newIntensity;
+        }
     }
     #endregion
 

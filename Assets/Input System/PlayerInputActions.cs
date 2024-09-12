@@ -107,6 +107,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""StunFlashLightToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""eae042a2-1f76-4a08-a98d-ee33e26135e8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -393,6 +402,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4e1fd3d-67ef-42f8-9027-752ede3f6d92"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StunFlashLightToggle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -989,6 +1009,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_ToggleFlashLight = m_Player.FindAction("ToggleFlashLight", throwIfNotFound: true);
         m_Player_ReloadFlashlight = m_Player.FindAction("ReloadFlashlight", throwIfNotFound: true);
         m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
+        m_Player_StunFlashLightToggle = m_Player.FindAction("StunFlashLightToggle", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1071,6 +1092,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ToggleFlashLight;
     private readonly InputAction m_Player_ReloadFlashlight;
     private readonly InputAction m_Player_Escape;
+    private readonly InputAction m_Player_StunFlashLightToggle;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1084,6 +1106,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @ToggleFlashLight => m_Wrapper.m_Player_ToggleFlashLight;
         public InputAction @ReloadFlashlight => m_Wrapper.m_Player_ReloadFlashlight;
         public InputAction @Escape => m_Wrapper.m_Player_Escape;
+        public InputAction @StunFlashLightToggle => m_Wrapper.m_Player_StunFlashLightToggle;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1120,6 +1143,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Escape.started += instance.OnEscape;
             @Escape.performed += instance.OnEscape;
             @Escape.canceled += instance.OnEscape;
+            @StunFlashLightToggle.started += instance.OnStunFlashLightToggle;
+            @StunFlashLightToggle.performed += instance.OnStunFlashLightToggle;
+            @StunFlashLightToggle.canceled += instance.OnStunFlashLightToggle;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1151,6 +1177,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Escape.started -= instance.OnEscape;
             @Escape.performed -= instance.OnEscape;
             @Escape.canceled -= instance.OnEscape;
+            @StunFlashLightToggle.started -= instance.OnStunFlashLightToggle;
+            @StunFlashLightToggle.performed -= instance.OnStunFlashLightToggle;
+            @StunFlashLightToggle.canceled -= instance.OnStunFlashLightToggle;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1342,6 +1371,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnToggleFlashLight(InputAction.CallbackContext context);
         void OnReloadFlashlight(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
+        void OnStunFlashLightToggle(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

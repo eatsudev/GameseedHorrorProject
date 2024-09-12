@@ -549,8 +549,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0}
   m_AnchorMax: {x: 0.75, y: 1}
-  m_AnchoredPosition: {x: 0, y: -5}
-  m_SizeDelta: {x: 0, y: -20}
+  m_AnchoredPosition: {x: 0, y: 0.31021118}
+  m_SizeDelta: {x: 0, y: -9.3796}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2209734653919631883
 GameObject:
@@ -636,7 +636,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4bff746bef4fcf478fa2003b2cbd5aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flashLight: {fileID: 9139911765998853789}
+  flashLights:
+  - {fileID: 9139911765998853789}
+  - {fileID: 6367269450228889205}
   toggleFLClip: {fileID: 0}
   Charge:
   - {fileID: 8284408003784382059}
@@ -2184,6 +2186,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: ae646a3c-2fdb-4753-b4f6-1f58cbece8e2
     m_ActionName: Player/Escape[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eae042a2-1f76-4a08-a98d-ee33e26135e8
+    m_ActionName: Player/StunFlashLightToggle[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -3154,13 +3160,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8185798044173517117}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.6617022, y: -0, z: -0, w: 0.7497668}
+  m_LocalRotation: {x: -0.5374121, y: -0.43288362, z: -0.37629995, w: 0.61822194}
   m_LocalPosition: {x: 0, y: 1.17, z: 0.15}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5845637470223633873}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -82, y: -70, z: 0}
 --- !u!108 &9139911765998853789
 Light:
   m_ObjectHideFlags: 0
@@ -3438,7 +3444,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
