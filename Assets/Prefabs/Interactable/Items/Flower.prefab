@@ -1282,11 +1282,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c6ab04285fafaa498ed18e5a0ae65c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: Flower
   textOnHover: Press E To Pick Up
   rigidbody: {fileID: 8045602593557894958}
   rotationOnHold: {x: 0, y: 0, z: 0}
   isInteractable: 1
   outlineDistance: 6
+  isBurning: 0
 --- !u!114 &1803631196921571419
 MonoBehaviour:
   m_ObjectHideFlags: 0

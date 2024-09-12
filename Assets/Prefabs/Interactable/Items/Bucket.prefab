@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e353f3173bc7743a09de5123ee34c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: Bucket
   textOnHover: E To Pick Up
   rigidbody: {fileID: 0}
   rotationOnHold: {x: 0, y: 0, z: 0}

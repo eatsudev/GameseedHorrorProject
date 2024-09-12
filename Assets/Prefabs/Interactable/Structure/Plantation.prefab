@@ -233,7 +233,7 @@ MonoBehaviour:
   - plantStageModelPrefabs: {fileID: 796923260516135736, guid: 652e69b6cf354334d85fb9a4cb97ea77,
       type: 3}
     growTime: 3
-  - plantStageModelPrefabs: {fileID: 796923260516135736, guid: 652e69b6cf354334d85fb9a4cb97ea77,
+  - plantStageModelPrefabs: {fileID: 796923260516135736, guid: 36fa4a8a73c0ff344b80939e3992900a,
       type: 3}
     growTime: 0
 --- !u!1 &5921618235405595267

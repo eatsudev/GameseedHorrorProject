@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1c957afd1cc2ad4f8f99b8f7814782b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: Pig
   textOnHover: E To Pick Up
   rigidbody: {fileID: 5211705524392913599}
   rotationOnHold: {x: 0, y: 0, z: 0}

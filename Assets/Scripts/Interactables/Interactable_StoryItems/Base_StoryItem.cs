@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class Base_StoryItem : MonoBehaviour, IInteractable
 {
+    public string textOnHover = "E to Read";
     public Sprite itemImage;
     public AudioClip readingAudioClip;
 

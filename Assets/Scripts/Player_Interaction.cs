@@ -113,11 +113,27 @@ public class Player_Interaction : MonoBehaviour
 
             IInteractable interactable = raycastHit.collider.GetComponent<IInteractable>();
 
+
             if (interactable != null)
             {
                 if (interactable.IsInteractable())
                 {
                     interactText.gameObject.SetActive(true);
+
+
+                    Base_Holdable_Items holdable_Items = raycastHit.collider.transform.gameObject.GetComponent<Base_Holdable_Items>();
+                    Base_StoryItem storyItem = raycastHit.collider.transform.gameObject.GetComponent<Base_StoryItem>();
+
+                    if (holdable_Items != null)
+                    {
+                        interactText.text = holdable_Items.textOnHover;
+                    }
+                    else if(storyItem != null)
+                    {
+                        interactText.text = storyItem.textOnHover;
+                    }
+                    
+
                     if (interacting)
                     {
                         interactable.Interact();
