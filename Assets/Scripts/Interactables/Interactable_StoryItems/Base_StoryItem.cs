@@ -64,9 +64,20 @@ public class Base_StoryItem : MonoBehaviour, IInteractable
 
         playerInputActions.Player.Escape.performed += QuitInteract;
 
+        StartCoroutine(CheckOutlineProcess());
+
     }
 
-    private void FixedUpdate()
+    private IEnumerator CheckOutlineProcess()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.2f);
+            CheckOutline();
+        }
+    }
+
+    public virtual void CheckOutline()
     {
         if (Vector3.Distance(player.transform.position, transform.position) < outlineDistance)
         {
@@ -77,6 +88,7 @@ public class Base_StoryItem : MonoBehaviour, IInteractable
             outline.enabled = false;
         }
     }
+
 
     public void MoveToFrontOfCamera()
     {

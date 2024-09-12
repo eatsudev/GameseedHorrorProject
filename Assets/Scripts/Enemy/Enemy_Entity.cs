@@ -195,13 +195,6 @@ public class Enemy_Entity : Base_Entity
         }
     }
 
-
-    void StopEnemy()
-    {
-        navMeshAgent.SetDestination(transform.position);
-        navMeshAgent.isStopped = true;
-    }
-
     private void TriggerJumpScare()
     {
         hasJumpScared = true;
@@ -226,6 +219,32 @@ public class Enemy_Entity : Base_Entity
             currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
         }
     }
+
+    #region Stun Codes
+
+    void StopEnemy()
+    {
+        navMeshAgent.SetDestination(transform.position);
+        navMeshAgent.isStopped = true;
+    }
+
+    public void ActivateStun()
+    {
+        isStunned = true;
+    }
+
+    public void DeactivateStun()
+    {
+        isStunned = false;
+    }
+
+    public bool IsStunned()
+    {
+        return isStunned;
+    }
+    #endregion
+
+
 
     void OnDrawGizmosSelected()
     {
@@ -253,6 +272,4 @@ public class Enemy_Entity : Base_Entity
 
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
-
-    
 }

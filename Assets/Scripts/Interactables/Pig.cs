@@ -39,12 +39,6 @@ public class Pig : Base_Holdable_Items
         }
     }
 
-    private void PigScared()
-    {
-        audioSource.clip = pigSounds;
-        audioSource.Play();
-    }
-
     IEnumerator PigScaredProcess()
     {
         audioSource.clip = pigSounds;

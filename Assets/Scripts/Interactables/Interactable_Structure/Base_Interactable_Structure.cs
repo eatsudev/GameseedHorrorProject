@@ -6,17 +6,7 @@ public class Base_Interactable_Structure : MonoBehaviour, IInteractable
 {
     public string textOnHover = "E To Interact";
     public bool isInteractable = true;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public bool IsInteractable()
     {
         return isInteractable;
