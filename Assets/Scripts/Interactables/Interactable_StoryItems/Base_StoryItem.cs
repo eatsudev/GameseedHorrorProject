@@ -14,9 +14,13 @@ public class Base_StoryItem : MonoBehaviour, IInteractable
     public Vector3 eulerAngles_Offset = Vector3.zero;
     public float distanceFromCamera = 2f; // Set the distance from the player's camera
     public float moveDuration = 0.5f;     // Time for the movement to complete
+    public float outlineDistance = 5f;
 
+    
     public bool isInteractable = true;
 
+    private Player_Entity player;
+    private Outline outline;
     private Transform cameraTransform;
     private Vector3 originalPosition;
     private Quaternion originalRotation;
@@ -36,6 +40,18 @@ public class Base_StoryItem : MonoBehaviour, IInteractable
         collider = GetComponent<Collider>();
         //rigidbody = GetComponent<Rigidbody>();
 
+        player = Entities_Manager.Instance.player;
+        outline = GetComponent<Outline>();
+
+        if (outline == null)
+        {
+            Debug.Log(gameObject + " Missing Outline");
+        }
+
+        outline.OutlineWidth = outlineDistance;
+        outline.enabled = false;
+
+
         audioSource = GetComponent<AudioSource>();
 
         if(audioSource == null )
@@ -48,6 +64,18 @@ public class Base_StoryItem : MonoBehaviour, IInteractable
 
         playerInputActions.Player.Escape.performed += QuitInteract;
 
+    }
+
+    private void FixedUpdate()
+    {
+        if (Vector3.Distance(player.transform.position, transform.position) < outlineDistance)
+        {
+            outline.enabled = true;
+        }
+        else
+        {
+            outline.enabled = false;
+        }
     }
 
     public void MoveToFrontOfCamera()

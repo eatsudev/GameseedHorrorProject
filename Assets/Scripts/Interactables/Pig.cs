@@ -12,8 +12,9 @@ public class Pig : Base_Holdable_Items
 
     private bool isScared = false;
     private bool isPickedUp = false;
-    void Start()
+    public override void Start()
     {
+        base.Start();
         player = Entities_Manager.Instance.player;
         audioSource = GetComponent<AudioSource>();
     }

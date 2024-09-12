@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Base_Holdable_Items : MonoBehaviour, IInteractable
 {
@@ -8,9 +9,36 @@ public class Base_Holdable_Items : MonoBehaviour, IInteractable
     public Rigidbody rigidbody;
     public Vector3 rotationOnHold = Vector3.zero;
     public bool isInteractable = true;
-    void Start()
+    public float outlineDistance = 5f;
+
+    private Player_Entity player;
+    private Outline outline;
+    public virtual void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        player = Entities_Manager.Instance.player;
+
+        outline = GetComponent<Outline>();
+
+        if(outline == null)
+        {
+            Debug.Log(gameObject + " Missing Outline");
+        }
+
+        outline.OutlineWidth = outlineDistance;
+        outline.enabled = false;
+    }
+
+    private void FixedUpdate()
+    {
+        if(Vector3.Distance(player.transform.position, transform.position) < outlineDistance)
+        {
+            outline.enabled = true;
+        }
+        else
+        {
+            outline.enabled = false;
+        }
     }
 
     public bool IsInteractable()

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5211705524392913599}
   - component: {fileID: 5243890342172392410}
   - component: {fileID: 6532118887537757273}
+  - component: {fileID: 347156186774054952}
   m_Layer: 6
   m_Name: Pig
   m_TagString: Untagged
@@ -153,6 +154,7 @@ MonoBehaviour:
   rigidbody: {fileID: 5211705524392913599}
   rotationOnHold: {x: 0, y: 0, z: 0}
   isInteractable: 1
+  outlineDistance: 6
   pigSounds: {fileID: 8300000, guid: 59e7eeab530d1b842bb51465e327f214, type: 3}
   pigLoudness: 15
 --- !u!82 &6532118887537757273
@@ -252,3 +254,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &347156186774054952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3778071520151550452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
