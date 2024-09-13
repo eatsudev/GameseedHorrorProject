@@ -1195,12 +1195,32 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 3234001277289918329}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1043359455}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16b5e61acb693ac45b58ab1c976dc6ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1043359455 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2209734653919631883, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
+    type: 3}
+  m_PrefabInstance: {fileID: 3234001277289918329}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1043359463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043359455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63b52b00513f76c41a5c910d04a0c9d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunModeLength: 3
+  stunEnemyLength: 5
 --- !u!1 &1197711642
 GameObject:
   m_ObjectHideFlags: 0
@@ -1722,6 +1742,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6518281885623920078}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2033107735 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6882142604331461597, guid: 1ba2105f7aedfa8459d2b5c4340bff9c,
+    type: 3}
+  m_PrefabInstance: {fileID: 8427372717238028649}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b743370ac3e4ec2a1668f5455a8ef8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2082943365 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 433803402541107472, guid: 063ed3603411cc7478937df1255fc528,
@@ -2213,6 +2245,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7718735938157838425, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
+        type: 3}
+      propertyPath: micDropdown
+      value: 
+      objectReference: {fileID: 2033107735}
     - target: {fileID: 8578972309114045230, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2226,7 +2263,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2209734653919631883, guid: 5d4f1dc1d83a1fc48b9776d58e992262,
+        type: 3}
+      insertIndex: 7
+      addedObject: {fileID: 1043359463}
   m_SourcePrefab: {fileID: 100100000, guid: 5d4f1dc1d83a1fc48b9776d58e992262, type: 3}
 --- !u!1001 &3567112809686324251
 PrefabInstance:
@@ -2664,7 +2705,7 @@ PrefabInstance:
     - target: {fileID: 100996798802981104, guid: f9ebedcdcf1d99f4fb4147396a69288a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2823710163368425272, guid: f9ebedcdcf1d99f4fb4147396a69288a,
         type: 3}

@@ -228,6 +228,19 @@ public class Enemy_Entity : Base_Entity
         navMeshAgent.isStopped = true;
     }
 
+    public void StartStun(float stunTime)
+    {
+        StartCoroutine(StunProcess(stunTime));
+    }
+    private IEnumerator StunProcess(float stunTime)
+    {
+        ActivateStun();
+
+        yield return new WaitForSeconds(stunTime);
+
+        DeactivateStun();
+    }
+
     public void ActivateStun()
     {
         isStunned = true;

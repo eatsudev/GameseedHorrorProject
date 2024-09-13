@@ -106,7 +106,6 @@ public class Audio_Detection : MonoBehaviour
         {
             totalLoudness += Mathf.Abs(waveData[i]);
         }
-        Debug.Log(totalLoudness);
         return totalLoudness / sampleWindow;
     }
 }

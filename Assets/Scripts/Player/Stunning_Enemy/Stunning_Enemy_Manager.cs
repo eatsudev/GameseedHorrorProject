@@ -10,6 +10,7 @@ public class Stunning_Enemy_Manager : MonoBehaviour
 
     public float stunModeLength = 3f;
     public float stunEnemyLength = 5f;
+    public float flashLightIntensityMultiplier = 5f;
 
     private bool isStunMode = false;
 
@@ -17,6 +18,7 @@ public class Stunning_Enemy_Manager : MonoBehaviour
     void Start()
     {
         player_FlashLight_Manager = Entities_Manager.Instance.player.GetComponent<Player_FlashLight_Manager>();
+        enemy = Entities_Manager.Instance.enemy;
 
         PlayerInputActions playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
@@ -26,7 +28,7 @@ public class Stunning_Enemy_Manager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     private void ToggleStun(InputAction.CallbackContext ctx)
@@ -45,27 +47,34 @@ public class Stunning_Enemy_Manager : MonoBehaviour
 
     private void StartStun()
     {
+        
         StartCoroutine(StunProcess());
     }
 
     private IEnumerator StunProcess()
     {
+        Debug.Log("start stunning");
         isStunMode = true;
 
         float temp = 0f;
+
+        player_FlashLight_Manager.MultiplyIntensity(flashLightIntensityMultiplier);
 
         while(temp < stunModeLength)
         {
             if (!enemy.IsStunned())
             {
-                enemy.ActivateStun();
+                Debug.Log("enemy Stunned");
+                enemy.StartStun(stunEnemyLength);
             }
 
             temp += Time.deltaTime;
-            yield return new WaitForSeconds(stunModeLength);
+            yield return null;
         }
 
+        player_FlashLight_Manager.ResetIntensity();
 
         isStunMode = false;
+        Debug.Log("done stunning");
     }
 }

@@ -22,6 +22,7 @@ public class Player_FlashLight_Manager : MonoBehaviour
     [SerializeField] private float FLCharge_DecreaseRate;
     private float currFLCharge;
 
+    private List<float> FLOriginalIntensity =  new List<float>(); 
 
     private bool isFLActive = false;
     void Start()
@@ -40,6 +41,7 @@ public class Player_FlashLight_Manager : MonoBehaviour
         foreach (Light light in flashLights)
         {
             light.enabled = false;
+            FLOriginalIntensity.Add(light.intensity);
         }
         
     }
@@ -146,11 +148,21 @@ public class Player_FlashLight_Manager : MonoBehaviour
         flashlightSFX.Play();
     }
 
-    public void SetFLIntensity(float newIntensity)
+    public void MultiplyIntensity(float multiplyIntensity)
     {
         foreach (Light light in flashLights)
         {
-            light.intensity = newIntensity;
+            light.intensity *= multiplyIntensity;
+        }
+    }
+
+    public void ResetIntensity()
+    {
+        int i = 0;
+        foreach (Light light in flashLights)
+        {
+            light.intensity = FLOriginalIntensity[i];
+            i += 1;
         }
     }
     #endregion
