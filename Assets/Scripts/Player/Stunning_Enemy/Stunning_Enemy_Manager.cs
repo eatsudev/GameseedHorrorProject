@@ -36,17 +36,36 @@ public class Stunning_Enemy_Manager : MonoBehaviour
             return;
         }
 
+        if(ctx.performed)
+        {
+            StartStun();
+        }
+
     }
 
-
+    private void StartStun()
+    {
+        StartCoroutine(StunProcess());
+    }
 
     private IEnumerator StunProcess()
     {
-        if (!enemy.IsStunned())
-        {
+        isStunMode = true;
 
+        float temp = 0f;
+
+        while(temp < stunModeLength)
+        {
+            if (!enemy.IsStunned())
+            {
+                enemy.ActivateStun();
+            }
+
+            temp += Time.deltaTime;
+            yield return new WaitForSeconds(stunModeLength);
         }
 
-        yield return new WaitForSeconds(stunModeLength);
+
+        isStunMode = false;
     }
 }

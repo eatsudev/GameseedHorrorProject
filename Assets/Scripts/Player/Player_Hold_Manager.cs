@@ -10,6 +10,7 @@ public class Player_Hold_Manager : MonoBehaviour
 
     public TextMeshProUGUI itemNameText;
     public TextMeshProUGUI warningText;
+    public TextMeshProUGUI storyText;
     public Transform holdPoint;
 
     private Base_Holdable_Items itemHeld;
@@ -30,6 +31,7 @@ public class Player_Hold_Manager : MonoBehaviour
     void Start()
     {
         warningText.gameObject.SetActive(false);
+        storyText.text = "";
 
         playerInput = GetComponent<PlayerInput>();
         PlayerInputActions playerInputActions = new PlayerInputActions();
@@ -99,6 +101,24 @@ public class Player_Hold_Manager : MonoBehaviour
         warningText.gameObject.SetActive(false);
     }
 
+    public void StoryText(string storyMessage)
+    {
+        StartCoroutine(StoryTextProcess(storyMessage));
+    }
+
+    public void HideStoryText()
+    {
+        storyText.gameObject.SetActive(false);
+    }
+    public IEnumerator StoryTextProcess(string storyMessage)
+    {
+        storyText.text = storyMessage;
+        storyText.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(4f);
+
+        storyText.gameObject.SetActive(false);
+    }
     public void ItemUsed()
     {
         itemHeld.transform.parent = null;

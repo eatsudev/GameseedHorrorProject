@@ -8,6 +8,7 @@ public class Base_StoryItem : MonoBehaviour, IInteractable
 {
     public string textOnHover = "E to Read";
     public Sprite itemImage;
+    public string readingAudioText;
     public AudioClip readingAudioClip;
 
     public AudioClip interactedClip;
@@ -98,7 +99,7 @@ public class Base_StoryItem : MonoBehaviour, IInteractable
 
     private IEnumerator MoveToFrontOfCameraProcess()
     {
-        Player_Interaction.instance.ChangeInteractType(1);
+        Player_Interaction.instance.SetMovement(false);
         isInteractable = false;
         DeactivateCollider();
         audioSource.PlayOneShot(interactedClip);
@@ -128,6 +129,7 @@ public class Base_StoryItem : MonoBehaviour, IInteractable
         {
             hasRead = true;
             audioSource.PlayOneShot(readingAudioClip);
+            Player_Hold_Manager.instance.StoryText(readingAudioText);
         }
         Item_Description_Manager.instance.OpenDisplay(this);
     }
@@ -141,7 +143,7 @@ public class Base_StoryItem : MonoBehaviour, IInteractable
     private IEnumerator ReturnToOriginalPosProcess()
     {
         yield return null;
-        Player_Interaction.instance.ChangeInteractType(0);
+        Player_Interaction.instance.SetMovement(true);
 
         Vector3 startPosition = transform.position;  // Current position in front of the camera
         Vector3 startRotation = transform.eulerAngles;  // Current rotation as Euler angles
@@ -159,6 +161,8 @@ public class Base_StoryItem : MonoBehaviour, IInteractable
         // Ensure the final position and rotation are exactly at the original
         transform.position = originalPosition;
         transform.eulerAngles = originalRotation.eulerAngles;
+
+        Player_Hold_Manager.instance.HideStoryText();
 
         isInteractable = true;
         ActivateCollider();

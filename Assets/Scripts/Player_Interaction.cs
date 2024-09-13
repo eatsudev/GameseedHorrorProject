@@ -84,8 +84,7 @@ public class Player_Interaction : MonoBehaviour
 
             interactText.text = regularInteractText;
 
-            Entities_Manager.Instance.player.transform.parent.GetComponent<FirstPersonController>().enabled = true;
-            Entities_Manager.Instance.player.transform.parent.GetComponent<CrouchController>().enabled = true;
+            SetMovement(true);
         }
         else if(type == 1)
         {
@@ -94,12 +93,25 @@ public class Player_Interaction : MonoBehaviour
 
             interactText.text = raycastInteractText;
 
-            Entities_Manager.Instance.player.transform.parent.GetComponent<FirstPersonController>().enabled = false;
-            Entities_Manager.Instance.player.transform.parent.GetComponent<CrouchController>().enabled = false;
+            SetMovement(false);
         }
         else
         {
             Debug.Log("No interact type of args");
+        }
+    }
+
+    public void SetMovement(bool movable)
+    {
+        if (movable)
+        {
+            Entities_Manager.Instance.player.transform.parent.GetComponent<FirstPersonController>().enabled = true;
+            Entities_Manager.Instance.player.transform.parent.GetComponent<CrouchController>().enabled = true;
+        }
+        else
+        {
+            Entities_Manager.Instance.player.transform.parent.GetComponent<FirstPersonController>().enabled = false;
+            Entities_Manager.Instance.player.transform.parent.GetComponent<CrouchController>().enabled = false;
         }
     }
 
