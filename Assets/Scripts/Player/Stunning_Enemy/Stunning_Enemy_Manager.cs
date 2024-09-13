@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,8 +12,14 @@ public class Stunning_Enemy_Manager : MonoBehaviour
     public float stunModeLength = 3f;
     public float stunEnemyLength = 5f;
     public float flashLightIntensityMultiplier = 5f;
+    public float newDecreaseRateOnStunMode = 10f;
+    public float maxDistance = 30f;
+    public float stunningAngle = 60f;
+    public LayerMask obstructionLayer;
 
+    private float distance;
     private bool isStunMode = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,9 +38,13 @@ public class Stunning_Enemy_Manager : MonoBehaviour
 
     }
 
+    public bool isStunning()
+    {
+        return isStunMode;
+    }
     private void ToggleStun(InputAction.CallbackContext ctx)
     {
-        if (isStunMode)
+        if (isStunMode || !player_FlashLight_Manager.IsFLActive())
         {
             return;
         }
@@ -56,25 +67,55 @@ public class Stunning_Enemy_Manager : MonoBehaviour
         Debug.Log("start stunning");
         isStunMode = true;
 
-        float temp = 0f;
+        float originDecreaseRate = player_FlashLight_Manager.DecreaseRate();
 
         player_FlashLight_Manager.MultiplyIntensity(flashLightIntensityMultiplier);
+        player_FlashLight_Manager.ChangeDecreaseRate(newDecreaseRateOnStunMode);
 
-        while(temp < stunModeLength)
+        float currTime = 0f;
+
+        while (currTime < stunModeLength)
         {
             if (!enemy.IsStunned())
             {
-                Debug.Log("enemy Stunned");
-                enemy.StartStun(stunEnemyLength);
+                if (DetectEnemyWithFOV())
+                {
+                    Debug.Log("enemy Stunned");
+                    enemy.StartStun(stunEnemyLength);
+                }
             }
 
-            temp += Time.deltaTime;
+            currTime += Time.deltaTime;
             yield return null;
         }
 
         player_FlashLight_Manager.ResetIntensity();
+        player_FlashLight_Manager.ChangeDecreaseRate(originDecreaseRate);
 
         isStunMode = false;
         Debug.Log("done stunning");
+    }
+
+    private bool DetectEnemyWithFOV()
+    {
+        Vector3 dir = (enemy.transform.position - transform.position).normalized;
+
+        distance = Vector3.Distance(enemy.transform.position, transform.position);        
+
+        if(distance > maxDistance)
+        {
+            return false;
+        }
+
+        if (Vector3.Angle(transform.forward, dir) < stunningAngle / 2)
+        {
+            if (!Physics.Raycast(transform.position, dir, distance, obstructionLayer))
+            {
+                Debug.Log("Detected Player");
+                return true;
+            }
+        }
+
+        return false;
     }
 }

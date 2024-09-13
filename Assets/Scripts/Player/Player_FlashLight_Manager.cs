@@ -17,6 +17,7 @@ public class Player_FlashLight_Manager : MonoBehaviour
     public TextMeshProUGUI warningText;
     public AudioSource flashlightSFX;
 
+    private Stunning_Enemy_Manager stunning_Enemy_Manager; 
 
     [SerializeField] private float maxFLCharge;
     [SerializeField] private float FLCharge_DecreaseRate;
@@ -27,6 +28,8 @@ public class Player_FlashLight_Manager : MonoBehaviour
     private bool isFLActive = false;
     void Start()
     {
+        stunning_Enemy_Manager = Entities_Manager.Instance.player.GetComponent<Stunning_Enemy_Manager>();
+
         currFLCharge = maxFLCharge;
 
         StartCoroutine(Initialize());
@@ -117,6 +120,11 @@ public class Player_FlashLight_Manager : MonoBehaviour
     {
         if (ctx.performed)
         {
+            if (stunning_Enemy_Manager.isStunning())
+            {
+                return;
+            }
+
             if (isFLActive)
             {
                 TurnOffFL();
@@ -165,6 +173,17 @@ public class Player_FlashLight_Manager : MonoBehaviour
             i += 1;
         }
     }
+
+    public float DecreaseRate()
+    {
+        return FLCharge_DecreaseRate;
+    }
+
+    public void ChangeDecreaseRate(float newDecreaseRate)
+    {
+        FLCharge_DecreaseRate = newDecreaseRate;
+    }
+
     #endregion
 
     #region Visual Indicator
