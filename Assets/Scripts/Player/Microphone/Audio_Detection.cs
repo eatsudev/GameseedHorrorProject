@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Audio_Detection : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class Audio_Detection : MonoBehaviour
     public int sampleWindow = 64;
 
     private AudioClip micClip;
+    public TMP_Dropdown micDropdown;
 
     private void Awake()
     {
@@ -26,16 +29,58 @@ public class Audio_Detection : MonoBehaviour
     {
         if (isUsingMic)
         {
-            MicToAudioClip();
+            PopulateDropdownWithMics();
+            MicToAudioClip(Microphone.devices[0]);
+        }
+        micDropdown.onValueChanged.AddListener(delegate { OnMicDropdownChanged(); });
+    }
+
+    private void PopulateDropdownWithMics()
+    {
+        micDropdown.ClearOptions();
+        List<string> options = new List<string>(Microphone.devices);
+
+        if (options.Count > 0)
+        {
+            micDropdown.AddOptions(options);
+        }
+        else
+        {
+            options.Add("No Microphone Available");
+            micDropdown.AddOptions(options);
+            micDropdown.interactable = false;
         }
     }
-    public void MicToAudioClip()
+    public void MicToAudioClip(string micName)
     {
-        string micName = Microphone.devices[0];
-        micClip = Microphone.Start(micName, true, 20, AudioSettings.outputSampleRate);
+        if (Microphone.devices.Length > 0)
+        {
+            if(micClip != null)
+            {
+                Microphone.End(micName);
+            }
 
-        Debug.Log(micName);
-        Debug.Log(Microphone.devices);
+            micClip = Microphone.Start(micName, true, 20, AudioSettings.outputSampleRate);
+
+            Debug.Log(micName);
+            Debug.Log(Microphone.devices);
+        }
+        else
+        {
+            Debug.LogWarning("No Microphones Detected.");
+        }
+        
+    }
+
+    public void OnMicDropdownChanged()
+    {
+        string selectedMic = micDropdown.options[micDropdown.value].text;
+        MicToAudioClip(selectedMic);
+    }
+
+    public void SelectMic(string newMicName)
+    {
+        micClip = Microphone.Start(newMicName, true, 20, AudioSettings.outputSampleRate);
     }
 
     public float GetLoudnessFromMic()

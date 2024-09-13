@@ -677,6 +677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isUsingMic: 1
   sampleWindow: 64
+  micDropdown: {fileID: 0}
 --- !u!114 &2404273057847776335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -689,7 +690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e188f5860c7aa42960698b00aadf47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detection: {fileID: 0}
+  detection: {fileID: 7718735938157838425}
   minLoudness: 0
   maxLoudness: 100
   loudnessSensibility: 1000
