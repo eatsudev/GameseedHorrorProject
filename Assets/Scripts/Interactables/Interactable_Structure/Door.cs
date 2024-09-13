@@ -10,6 +10,7 @@ public class Door : Base_Interactable_Structure
     public AudioClip openDoorClip;
     public AudioClip closeDoorClip;
     public Key key;
+    public PadLock padLock;
 
     private Animator animator;
     private Collider collider;
@@ -20,13 +21,21 @@ public class Door : Base_Interactable_Structure
     // Start is called before the first frame update
     void Start()
     {
-        if (key)
+        if (key || padLock)
         {
             isLocked = true;
+
+            if (padLock)
+            {
+                isInteractable = false;
+                padLock.door = this;
+            }
         }
 
         animator = GetComponent<Animator>();
         collider = GetComponent<Collider>();
+
+        
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -38,7 +47,7 @@ public class Door : Base_Interactable_Structure
     public override void Interact()
     {
         base.Interact();
-        if(isLocked)
+        if(isLocked && !padLock)
         {
             Base_Holdable_Items heldItem = Player_Hold_Manager.instance.GetHeldItem();
 
@@ -46,7 +55,7 @@ public class Door : Base_Interactable_Structure
             {
                 Locked();
 
-                Player_Hold_Manager.instance.WarningOnItem("Need Key");
+                Player_Hold_Manager.instance.WarningOnItem("I need a Key");
                 return;
             }
 
@@ -56,7 +65,7 @@ public class Door : Base_Interactable_Structure
             {
                 Locked();
 
-                Player_Hold_Manager.instance.WarningOnItem("Need Key");
+                Player_Hold_Manager.instance.WarningOnItem("I need a Key");
                 return;
             }
 
@@ -64,7 +73,7 @@ public class Door : Base_Interactable_Structure
             {
                 Locked();
 
-                Player_Hold_Manager.instance.WarningOnItem("Wrong Key");
+                Player_Hold_Manager.instance.WarningOnItem("This Key doesn't match");
                 return;
             }
 
@@ -99,7 +108,13 @@ public class Door : Base_Interactable_Structure
         animator.SetTrigger("Unlocked");
         audioSource.PlayOneShot(unlockedClip);
 
+        Unlock();
+    }
+
+    public void Unlock()
+    {
         isLocked = false;
+        isInteractable = true;
     }
 
     private void Locked()
@@ -135,10 +150,18 @@ public class Door : Base_Interactable_Structure
 
     private IEnumerator DisableColliderDuringAnimation()
     {
-        collider.enabled = false;
+        if (collider)
+        {
+            collider.enabled = false;
+        }
+        
 
         yield return new WaitForSeconds(0.5f);
 
-        collider.enabled = true;
+        if (collider)
+        {
+            collider.enabled = true;
+        }
+        
     }
 }

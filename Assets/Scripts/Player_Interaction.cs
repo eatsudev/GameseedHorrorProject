@@ -125,6 +125,10 @@ public class Player_Interaction : MonoBehaviour
 
             IInteractable interactable = raycastHit.collider.GetComponent<IInteractable>();
 
+            if (interactable == null)
+            {
+                interactable = raycastHit.collider.GetComponentInParent<IInteractable>();
+            }
 
             if (interactable != null)
             {
@@ -135,6 +139,7 @@ public class Player_Interaction : MonoBehaviour
 
                     Base_Holdable_Items holdable_Items = raycastHit.collider.transform.gameObject.GetComponent<Base_Holdable_Items>();
                     Base_StoryItem storyItem = raycastHit.collider.transform.gameObject.GetComponent<Base_StoryItem>();
+                    Base_Interactable_Structure structure = raycastHit.collider.transform.gameObject.GetComponent<Base_Interactable_Structure>();
 
                     if (holdable_Items != null)
                     {
@@ -143,6 +148,10 @@ public class Player_Interaction : MonoBehaviour
                     else if(storyItem != null)
                     {
                         interactText.text = storyItem.textOnHover;
+                    }
+                    else if (structure != null)
+                    {
+                        interactText.text = structure.textOnHover;
                     }
                     
 
@@ -169,7 +178,12 @@ public class Player_Interaction : MonoBehaviour
 
             IInteractable interactable = raycastHit.collider.GetComponent<IInteractable>();
 
-            if(interactable != null)
+            if (interactable == null)
+            {
+                interactable = raycastHit.collider.GetComponentInParent<IInteractable>();
+            }
+
+            if (interactable != null)
             {
                 if(interactable.IsInteractable())
                 {

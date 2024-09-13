@@ -67,5 +67,15 @@ public class Pig : Base_Holdable_Items
         base.ActivateRigidBody();
 
         isPickedUp = false;
+
+        rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+
+        StartCoroutine(FreezeRotAfter(3));
+    }
+
+    private IEnumerator FreezeRotAfter(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }
 }
