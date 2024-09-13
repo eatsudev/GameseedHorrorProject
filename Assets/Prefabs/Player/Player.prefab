@@ -567,6 +567,7 @@ GameObject:
   - component: {fileID: 2748893457332164584}
   - component: {fileID: 7718735938157838425}
   - component: {fileID: 2404273057847776335}
+  - component: {fileID: 7286260927373741398}
   - component: {fileID: 910367365378141646}
   m_Layer: 7
   m_Name: Scripts
@@ -696,6 +697,21 @@ MonoBehaviour:
   maxLoudness: 50
   loudnessSensibility: 1000
   threshold: 1
+--- !u!114 &7286260927373741398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2209734653919631883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63b52b00513f76c41a5c910d04a0c9d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunModeLength: 3
+  stunEnemyLength: 5
+  flashLightIntensityMultiplier: 5
 --- !u!82 &910367365378141646
 AudioSource:
   m_ObjectHideFlags: 0
