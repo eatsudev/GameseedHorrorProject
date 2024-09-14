@@ -20,6 +20,7 @@ public class LockDial : MonoBehaviour, IInteractable
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.outputAudioMixerGroup = AudioManager.instance.sfx;
         }
     }
 

@@ -55,11 +55,14 @@ public class Stove_Open : Base_Interactable_Structure
         yield return null;
 
         Base_Holdable_Items heldItem = Player_Hold_Manager.instance.GetHeldItem();
-        heldItem.gameObject.SetActive(false);
+        if (heldItem)
+        {
+            heldItem.gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(0.479f);
+            yield return new WaitForSeconds(0.479f);
 
-        heldItem.gameObject.SetActive(true);
+            heldItem.gameObject.SetActive(true);
+        }
     }
 
     public void OpenDoor()

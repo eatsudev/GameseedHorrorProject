@@ -38,6 +38,11 @@ public class Door : Base_Interactable_Structure
         handAnimator = Player_Hold_Manager.instance.leftHandAnimator;
 
         audioSource = GetComponent<AudioSource>();
+        if (!audioSource)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.outputAudioMixerGroup = AudioManager.instance.sfx;
+        }
     }
 
     // Update is called once per frame
@@ -114,11 +119,17 @@ public class Door : Base_Interactable_Structure
         yield return null;
 
         Base_Holdable_Items heldItem = Player_Hold_Manager.instance.GetHeldItem();
-        heldItem.gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(0.479f);
+        if (heldItem)
+        {
+            heldItem.gameObject.SetActive(false);
 
-        heldItem.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.479f);
+
+            heldItem.gameObject.SetActive(true);
+        }
+
+        
     }
     private void UnlockDoor()
     {

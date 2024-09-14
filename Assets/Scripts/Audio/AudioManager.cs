@@ -21,6 +21,9 @@ public class AudioManager : MonoBehaviour
     private float sfxValue;
     public static AudioManager instance;
 
+    public AudioMixerGroup sfx;
+    public AudioMixerGroup bgm;
+
     private float defaultVolume = 0.75f;
 
     private void Awake()
