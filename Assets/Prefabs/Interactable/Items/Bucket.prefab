@@ -105,8 +105,9 @@ MonoBehaviour:
   rotationOnHold: {x: 0, y: 0, z: 0}
   isInteractable: 1
   outlineDistance: 6
-  emptyBucketModelGO: {fileID: 7648676989934934812}
-  filledBucketModelGO: {fileID: 4010557846896777792}
+  currModel: {fileID: 7648676989934934812}
+  emptyBucketPrefab: {fileID: 7648676989934934812}
+  filledBucketPrefab: {fileID: 4010557846896777792}
 --- !u!114 &4920368464052062294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
+  outlineMode: 1
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
   outlineWidth: 5
   precomputeOutline: 0
