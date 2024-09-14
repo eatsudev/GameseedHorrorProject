@@ -16,6 +16,7 @@ public class Player_FlashLight_Manager : MonoBehaviour
     public HorizontalLayoutGroup chargeHorizontalLayoutGroup;
     public TextMeshProUGUI warningText;
     public AudioSource flashlightSFX;
+    public Animator animator;
 
     private Stunning_Enemy_Manager stunning_Enemy_Manager; 
 
@@ -133,6 +134,8 @@ public class Player_FlashLight_Manager : MonoBehaviour
             {
                 TurnOnFL();
             }
+
+            animator.SetTrigger("ToggleFL");
         }
     }
 

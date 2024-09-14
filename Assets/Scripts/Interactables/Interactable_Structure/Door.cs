@@ -15,6 +15,7 @@ public class Door : Base_Interactable_Structure
     private Animator animator;
     private Collider collider;
     private AudioSource audioSource;
+    private Animator handAnimator;
 
     private bool isOpen;
     private bool isLocked = false;
@@ -34,8 +35,8 @@ public class Door : Base_Interactable_Structure
 
         animator = GetComponent<Animator>();
         collider = GetComponent<Collider>();
+        handAnimator = Player_Hold_Manager.instance.leftHandAnimator;
 
-        
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -47,7 +48,10 @@ public class Door : Base_Interactable_Structure
     public override void Interact()
     {
         base.Interact();
-        if(isLocked && !padLock)
+        
+        StartCoroutine(InteractAnimationProcess());
+
+        if (isLocked && !padLock)
         {
             Base_Holdable_Items heldItem = Player_Hold_Manager.instance.GetHeldItem();
 
@@ -103,6 +107,19 @@ public class Door : Base_Interactable_Structure
         }
     }
 
+    private IEnumerator InteractAnimationProcess()
+    {
+        handAnimator.SetTrigger("InteractDoor");
+
+        yield return null;
+
+        Base_Holdable_Items heldItem = Player_Hold_Manager.instance.GetHeldItem();
+        heldItem.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(0.479f);
+
+        heldItem.gameObject.SetActive(true);
+    }
     private void UnlockDoor()
     {
         animator.SetTrigger("Unlocked");

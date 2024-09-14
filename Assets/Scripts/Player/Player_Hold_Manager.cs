@@ -12,7 +12,7 @@ public class Player_Hold_Manager : MonoBehaviour
     public TextMeshProUGUI warningText;
     public TextMeshProUGUI storyText;
 
-    public Animator handAnimator;
+    public Animator leftHandAnimator;
     public Transform holdPoint;
 
     private Base_Holdable_Items itemHeld;
@@ -43,7 +43,7 @@ public class Player_Hold_Manager : MonoBehaviour
         playerInputActions.Player.DropItem.canceled += OnDropItem;
 
 
-        if (!handAnimator)
+        if (!leftHandAnimator)
         {
             Debug.Log("no hand animator");
         }
@@ -62,13 +62,24 @@ public class Player_Hold_Manager : MonoBehaviour
         }
         else
         {
-            itemHeld = itemToHold;
-            itemHeld.transform.position = holdPoint.position;
-            itemHeld.transform.parent = holdPoint;
-            itemHeld.DeactivateRigidBody();
-
-            itemNameText.text = itemHeld.itemName;
+            StartCoroutine(PickUpItemProcess(itemToHold));
         }
+    }
+
+    private IEnumerator PickUpItemProcess(Base_Holdable_Items itemToHold)
+    {
+        leftHandAnimator.SetBool("PickUpItem", true);
+        leftHandAnimator.SetTrigger("PickUpTrigger");
+
+        yield return new WaitForSeconds(0.25f);
+
+        itemHeld = itemToHold;
+        itemHeld.transform.position = holdPoint.position;
+        itemHeld.transform.parent = holdPoint;
+        itemHeld.DeactivateRigidBody();
+
+        itemNameText.text = itemHeld.itemName;
+        
     }
 
     private void OnDropItem(InputAction.CallbackContext ctx)
@@ -88,6 +99,9 @@ public class Player_Hold_Manager : MonoBehaviour
         itemHeld.ActivateRigidBody();
         itemHeld = null;
         itemNameText.text = "";
+
+        leftHandAnimator.SetBool("PickUpItem", false);
+        leftHandAnimator.SetTrigger("DropItem");
     }
 
     public void WarningOnItem(string warningMessage)
@@ -132,6 +146,9 @@ public class Player_Hold_Manager : MonoBehaviour
         itemHeld.transform.parent = null;
         Destroy(itemHeld.gameObject);
         itemHeld = null;
+
+        leftHandAnimator.SetBool("PickUpItem", false);
+        leftHandAnimator.SetTrigger("DropItem");
     }
 
     

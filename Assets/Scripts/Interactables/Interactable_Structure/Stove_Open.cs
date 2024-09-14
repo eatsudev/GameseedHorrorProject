@@ -7,6 +7,7 @@ public class Stove_Open : Base_Interactable_Structure
     private bool isOpen;
     private Animator anim;
     private Collider coli;
+    private Animator handAnimator;
     public AudioSource openSFX;
     public AudioSource closeSFX;
     // Start is called before the first frame update
@@ -17,6 +18,8 @@ public class Stove_Open : Base_Interactable_Structure
 
         openSFX = GetComponent<AudioSource>();
         closeSFX = GetComponent<AudioSource>();
+
+        handAnimator = Player_Hold_Manager.instance.leftHandAnimator;
     }
 
     // Update is called once per frame
@@ -34,6 +37,8 @@ public class Stove_Open : Base_Interactable_Structure
             return;
         }
 
+        StartCoroutine(InteractAnimationProcess());
+
         if (!isOpen)
         {
             OpenDoor();
@@ -42,6 +47,19 @@ public class Stove_Open : Base_Interactable_Structure
         {
             CloseDoor();
         }
+    }
+    private IEnumerator InteractAnimationProcess()
+    {
+        handAnimator.SetTrigger("InteractDoor");
+
+        yield return null;
+
+        Base_Holdable_Items heldItem = Player_Hold_Manager.instance.GetHeldItem();
+        heldItem.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(0.479f);
+
+        heldItem.gameObject.SetActive(true);
     }
 
     public void OpenDoor()
