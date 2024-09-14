@@ -11,6 +11,8 @@ public class Player_Hold_Manager : MonoBehaviour
     public TextMeshProUGUI itemNameText;
     public TextMeshProUGUI warningText;
     public TextMeshProUGUI storyText;
+
+    public Animator handAnimator;
     public Transform holdPoint;
 
     private Base_Holdable_Items itemHeld;
@@ -39,6 +41,12 @@ public class Player_Hold_Manager : MonoBehaviour
 
         playerInputActions.Player.DropItem.performed += OnDropItem;
         playerInputActions.Player.DropItem.canceled += OnDropItem;
+
+
+        if (!handAnimator)
+        {
+            Debug.Log("no hand animator");
+        }
     }
 
     void Update()
