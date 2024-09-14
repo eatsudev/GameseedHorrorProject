@@ -27,6 +27,7 @@ public class Enemy_Entity : Base_Entity
     public LayerMask obstructionLayer;
     public Transform[] patrolPoints;
     public float waitTimeAtPatrolPoint = 2f;
+    public Animator anim;
     
 
     //public Animator ghostAnimator; 
@@ -50,6 +51,7 @@ public class Enemy_Entity : Base_Entity
     {
         audioSource = GetComponent<AudioSource>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
         navMeshAgent.speed = chaseSpeed;
         navMeshAgent.isStopped = false;
         StartCoroutine(DetectPlayerProcess());
@@ -70,7 +72,6 @@ public class Enemy_Entity : Base_Entity
             {
                 Debug.Log("Detected");
                 MoveTowardsTarget(player.transform);
-
                 float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
                 if (distanceToPlayer <= jumpScareDistance)
                 {
@@ -80,7 +81,6 @@ public class Enemy_Entity : Base_Entity
             else if (target)
             {
                 MoveTowardsTarget(target.transform);
-
                 float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
                 if (distanceToTarget <= 2f)
                 {
@@ -92,7 +92,8 @@ public class Enemy_Entity : Base_Entity
                 StartCoroutine(WaitAndPatrolNextPoint());
             }
         }
-
+        float currentSpeed = navMeshAgent.velocity.magnitude;
+        anim.SetFloat("Speed", currentSpeed);
         navMeshAgent.speed = player ? chaseSpeed * speedModifier : moveSpeed;
     }
 
@@ -112,6 +113,7 @@ public class Enemy_Entity : Base_Entity
         Collider[] hits = Physics.OverlapSphere(transform.position, maximumDetectRadius, playerLayer);
 
         Player_Entity newest_Player = null;
+        anim.SetTrigger("BeginChase");
         foreach (Collider hit in hits)
         {
             newest_Player = hit.gameObject.GetComponentInChildren<Player_Entity>();
@@ -192,6 +194,8 @@ public class Enemy_Entity : Base_Entity
         {
             navMeshAgent.isStopped = false;
             navMeshAgent.SetDestination(target.transform.position);
+            anim.SetBool("isChasing", true);
+            //anim.SetBool("isWalking", false);
         }
     }
 
@@ -206,6 +210,8 @@ public class Enemy_Entity : Base_Entity
     private IEnumerator WaitAndPatrolNextPoint()
     {
         isWaiting = true;
+        //anim.SetBool("isWalking", false);
+        anim.SetBool("isChasing", false);
         yield return new WaitForSeconds(waitTimeAtPatrolPoint);
         isWaiting = false;
         PatrolNextPoint();
@@ -217,6 +223,8 @@ public class Enemy_Entity : Base_Entity
         {
             navMeshAgent.destination = patrolPoints[currentPatrolIndex].position;
             currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+            //anim.SetBool("isWalking", true);
+            anim.SetBool("isChasing", false);
         }
     }
 
@@ -235,9 +243,10 @@ public class Enemy_Entity : Base_Entity
     private IEnumerator StunProcess(float stunTime)
     {
         ActivateStun();
-
+        anim.SetBool("isStunning", true);
+        anim.SetTrigger("Stun");
         yield return new WaitForSeconds(stunTime);
-
+        anim.SetBool("isStunning", false);
         DeactivateStun();
     }
 
